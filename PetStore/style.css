@@ -1,0 +1,79 @@
+/* CSS for the fixed navigation bar */
+
+.NavHeader {
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  color: white;
+  padding: 0.5em;
+  text-align: left;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.NavHeader a {
+  color: white;
+  margin-left: 1em;
+  text-decoration: none;
+}
+
+#main {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+/* #main > * {
+  flex: 0 auto;
+} */
+
+.NavLeft {
+  background-color: #666;
+  color: white;
+  /* 4 sides */
+  /* top/bottom, left/right */
+  /* top, left/right, bottom */
+  /* top, right, bottom, left */
+  padding: 0.5em;
+  margin: 0 1em 0 0;
+  text-align: left;
+  text-wrap: nowrap;
+  /* overflow: hidden;  */
+}
+
+.NavLeft > h1,
+.NavLeft > h2,
+.NavLeft > h3,
+.NavLeft > h4,
+.NavLeft > h5,
+.NavLeft > h6 {
+  margin: 0.5em 0.1em;
+}
+
+.NavLeft a {
+  display: block;
+  color: white;
+  padding: 0 0.5em 0.25em 1em;
+  text-decoration: none;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: right;
+}
+
+footer > p {
+  margin: 0;
+  padding: 0.1em 0.5em;
+  font-size: small;
+}
+
+.HeaderWithDescription {
+  margin-bottom: 0.1em;
+}
+
+.HeaderDescription {
+  margin-top: 0.1em;
+  font-size: small;
+}
