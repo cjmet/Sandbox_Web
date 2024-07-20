@@ -17,17 +17,13 @@
   text-decoration: none;
 }
 
-#main {
+.Main {
   display: flex;
   margin: 0;
   padding: 0;
 }
 
-/* #main > * {
-  flex: 0 auto;
-} */
-
-.NavLeft {
+.MainNavLeft {
   background-color: #666;
   color: white;
   /* 4 sides */
@@ -41,20 +37,25 @@
   /* overflow: hidden;  */
 }
 
-.NavLeft > h1,
-.NavLeft > h2,
-.NavLeft > h3,
-.NavLeft > h4,
-.NavLeft > h5,
-.NavLeft > h6 {
+.MainNavLeft > h1,
+.MainNavLeft > h2,
+.MainNavLeft > h3,
+.MainNavLeft > h4,
+.MainNavLeft > h5,
+.MainNavLeft > h6 {
   margin: 0.5em 0.1em;
 }
 
-.NavLeft a {
+.MainNavLeft a {
   display: block;
   color: white;
   padding: 0 0.5em 0.25em 1em;
   text-decoration: none;
+}
+
+.MainData {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 footer {
