@@ -80,6 +80,7 @@ main {
   /* justify-content: space-around; */
   display: flex;
   flex-wrap: wrap;
+  flex-grow: 1;
   border: 3px solid lightcoral;
   background-color: lightgray;
 }
