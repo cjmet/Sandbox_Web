@@ -4,22 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hello World! (title)</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style-flex.css" />
   </head>
 
   <body>
-    <nav class="NavHeader">
-      <img
-        src="images/logo.png"
-        alt="Logo"
-        style="height: 50px; float: inline-start"
-      />
-      <!-- Example logo -->
-      <h1>The Pet Shop</h1>
-      <!-- Example navigation links -->
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-    </nav>
+    <header class="DocumentHeader">
+      <nav>
+        <img
+          src="images/logo.png"
+          alt="Logo"
+          style="height: 50px; float: inline-start"
+        />
+        <!-- Example logo -->
+        <h1>The Pet Shop (Flexbox)</h1>
+        <!-- Example navigation links -->
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+      </nav>
+    </header>
 
     <main>
       <nav class="MainNavLeft">
@@ -36,12 +38,17 @@
         <a href="#tigers">Tigers</a>
       </nav>
 
-      <div class="MainData">
+      <section class="MainData">
+        <header class="MainDataTitle">
+          <h2 class="HeaderWithDescription"> Main Document Content </h2>
+          <p class="HeaderDescription"> Shrinking this vertically appears to be a challenge.</p>
+        </header>
+        <div class="MainDataArticles">
         <article>
           <header>
-            <h2 class="HeaderWithDescription">
+            <h3 class="HeaderWithDescription">
               Hello World! (article > header)
-            </h2>
+            </h3>
             <p class="HeaderDescription">
               Published on <time datetime="2023-04-01">April 1, 2024</time>
             </p>
@@ -64,24 +71,24 @@
 
         <article>
           <header>
-            <h2 class="HeaderWith">Hello World! It's a Wonderful World!</h2>
+            <h3 >Hello World! It's a Wonderful World!</h2>
           </header>
         </article>
 
         <article>
           <header>
-            <h2 class="HeaderWith">Hello World! It's a Beautiful World!</h2>
+            <h3 >Hello World! It's a Beautiful World!</h2>
           </header>
         </article>
 
         <article>
           <header>
-            <h2 class="HeaderWith">Hello World! It's a Rainy World!</h2>
-            <p> It's been raining for 180 days ... </p>
+            <h3 class="HeaderWithDescription">Hello World! It's a Rainy World!</h2>
+            <p class="HeaderDescription">It's been raining for 180 days ...</p>
           </header>
         </article>
-
-      </div>
+        </div>
+      </section>
     </main>
 
     <footer>

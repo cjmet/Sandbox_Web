@@ -18,7 +18,7 @@ body {
   flex-direction: column;
 }
 
-.NavHeader {
+.DocumentHeader {
   border: 3px solid purple;
   flex-shrink: 0;
   position: sticky;
@@ -31,7 +31,7 @@ body {
   z-index: 1000;
 }
 
-.NavHeader a {
+.DocumentHeader a {
   color: white;
   margin-left: 1em;
   text-decoration: none;
@@ -51,7 +51,6 @@ main {
   color: white;
   padding: 0.5em;
   margin: 0;
-  text-align: left;
   text-wrap: nowrap;
   /* overflow: hidden;  */
 }
@@ -72,17 +71,34 @@ main {
   text-decoration: none;
 }
 
+
 .MainData {
   /* align-content, justify-content, flex-grow; all interact. */
   /* content automatically grows perpendicular, toggle grow for parralel */
   /* toggle grow if you want to modify the justify/align parralel */
   /* align-content: space-around; */
   /* justify-content: space-around; */
+  flex-shrink: 1;
   display: flex;
   flex-wrap: wrap;
-  flex-grow: 1;
   border: 3px solid lightcoral;
   background-color: lightgray;
+  /* align-content: stretch; */
+  /* justify-content: stretch; */
+}
+
+.MainDataTitle { 
+  border: 3px solid black;
+  width: 100%;
+  text-align: center;
+  flex: 0 0 auto;
+  align-self: start;
+  justify-self: start;
+}
+
+.MainDataArticles {
+  display: flex;
+  border: 3px solid black
 }
 
 article {
@@ -90,12 +106,11 @@ article {
   background-color: lightskyblue;
   margin: 0.5em;
   padding: 0.5em;
-  flex-grow: 1;
+  flex: 1 1 auto;
 }
 
 footer {
   border: 3px solid purple;
-  flex-shrink: 0;
   background-color: #333;
   color: white;
   text-align: right;
