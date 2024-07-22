@@ -105,20 +105,21 @@ main {
      * User input values.
      */
   --grid-item-avg-width: 560px;
-  /* --grid-item-min-width: 330px; */
 
   /**
      * Calculated values.
      */
-  --grid-item-columns: round(calc(100% / var(--grid-item-avg-width)),1);
-  --grid-min-width: round(down,calc(100% / var(--grid-item-columns)),1);
-  
+  --grid-item-tmp: calc(100% / var(--grid-item-avg-width));
+  /* --grid-item-tmp: 1.5; */
+  --grid-item-columns: round(var(--grid-item-tmp),1); 
+  --grid-min-width: round(down,calc(100% / var(--grid-item-columns)),1px);
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--grid-min-width), 1fr));
   
   
   /* display: grid; */
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  /* grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); */
   /* grid-template-columns: repeat(auto-fit, minmax(330px, max-content)); */
   /* grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); */
   /* grid-template-columns: repeat(auto-fit, fit-content(300px); */
