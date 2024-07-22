@@ -95,7 +95,7 @@ main {
 .MainDataArticles {
   flex-grow: 1;
   margin: 5px;
-  height: 1fr;
+  /* height: 1fr; */
   border: 3px solid lightcoral;
   background-color: lightgray;
 
@@ -118,8 +118,9 @@ main {
   
   
   /* display: grid; */
-  /* grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); */
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   /* grid-template-columns: repeat(auto-fit, minmax(330px, max-content)); */
+  /* grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); */
   /* grid-template-columns: repeat(auto-fit, fit-content(300px); */
 
   /* how do we get this to work with this grid? */
