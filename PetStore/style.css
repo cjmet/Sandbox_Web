@@ -102,7 +102,7 @@ main {
   background-color: lightgray;
 
   display: grid;
-  overflow: scroll;
+  overflow: auto;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
   /* Flexbox option.  This option is working how I intended. */
@@ -114,6 +114,8 @@ main {
 
 
 /* @container .MainContainer (min-width: 1px) { */
+/* the media query only works because we know the width of the nav. */
+/* I'd much rather use a container query */
 /* 185 + 560, 445, 300* */
 @media (min-width: 720px) {
   .MainDataArticles {
