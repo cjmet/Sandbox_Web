@@ -93,48 +93,54 @@ main {
 }
 
 .MainDataArticles {
+  container-type: size;
+  container-name: MainContainer;
+
   flex-grow: 1;
   margin: 5px;
-  /* height: 1fr; */
   border: 3px solid lightcoral;
   background-color: lightgray;
 
-  /* https://css-tricks.com/an-auto-filling-css-grid-with-max-columns/ */
-
-  /**
-     * User input values.
-     */
-  --grid-item-avg-width: 560px;
-
-  /**
-     * Calculated values.
-     */
-  --grid-item-tmp: calc(100% / var(--grid-item-avg-width));
-  /* --grid-item-tmp: 1.5; */
-  --grid-item-columns: round(var(--grid-item-tmp),1); 
-  --grid-min-width: round(down,calc(100% / var(--grid-item-columns)),1px);
-
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--grid-min-width), 1fr));
-  
-  
-  /* display: grid; */
-  /* grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); */
-  /* grid-template-columns: repeat(auto-fit, minmax(330px, max-content)); */
-  /* grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); */
-  /* grid-template-columns: repeat(auto-fit, fit-content(300px); */
-
-  /* how do we get this to work with this grid? */
-  /* grid-auto-flow: dense;   */
-  /* grid-auto-rows: max-content;  */
-  /* grid-auto-columns: max-content;   */
-  /* align-content: space-evenly; */
-  /* justify-content: space-evenly;  */
+  overflow: scroll;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
   /* Flexbox option.  This option is working how I intended. */
   /* display: flex;
   flex-flow: row wrap; */
 }
+
+
+
+
+/* @container .MainContainer (min-width: 1px) { */
+/* 185 + 560, 445, 300* */
+@media (min-width: 720px) {
+  .MainDataArticles {
+    grid-template-columns: minmax(445px, 1fr);
+    /* background-color: magenta; */
+  }
+}
+
+/* 185 + 560, 445, 300* */
+@media (min-width: 930px) {
+  .MainDataArticles {
+    grid-template-columns: minmax(445px, 1fr) minmax(300px, 1fr);
+  }
+}
+
+/* 185 + 560, 445, 300* */
+@media (min-width: 1490px) {
+  .MainDataArticles {
+    grid-template-columns: minmax(560px, 1fr) minmax(445px, 1fr) repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+
+
+
+/* *** */
+
 
 article {
   flex-grow: 1; /* this is only for the flexbox option if you turn it on */
