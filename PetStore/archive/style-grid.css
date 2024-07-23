@@ -15,7 +15,7 @@ html, body {
 body {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: min-content 1fr auto;
   grid-template-areas: 
     "header header"
     "nav main"
@@ -24,6 +24,7 @@ body {
 
 .DocumentHeader {
   grid-area: header;
+  height: 100%;
   border: 3px solid purple;
   position: sticky;
   top: 0;
@@ -75,6 +76,7 @@ main {
   border: 5px solid green;
   margin: 0;
   padding: 0;
+  
   display: grid;
   grid-template-rows: auto 1fr;
 }
