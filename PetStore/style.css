@@ -1,5 +1,16 @@
 /* CSS for the fixed navigation bar */
 
+/* 
+  Questions: 
+  1. Container Query
+  2. --grid-item-tmp: calc(100% / var(--grid-item-avg-width));
+  3. rel = "import"  (deprecated) and Modular html and css
+        <!-- <object type="text/html" data="main.shtml"></object> -->
+        <!-- <link rel="import" href="main.shtml"> -->
+        <!-- #include file="main.shtml" -->
+  4. html, body { height: 100%; margin: 0; }
+*/
+
 /* this is what makes it fill the viewport */
 /* this was ommitted from the discussion, demos, and sample files */
 html,
@@ -180,9 +191,19 @@ main {
 
   .MainNavLeft {
     display: flex;
-    align-items: end;
-    justify-content: end;
+    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
+    overflow: hidden;
+  }
+
+  .MainNavLeft > h1,
+  .MainNavLeft > h2,
+  .MainNavLeft > h3,
+  .MainNavLeft > h4,
+  .MainNavLeft > h5,
+  .MainNavLeft > h6 {
+    display: none;
   }
 
   main {
@@ -201,6 +222,7 @@ main {
   .MainDataArticles {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;  /* for the flexbox option */
     overflow: auto;
   }
 }
@@ -208,7 +230,7 @@ main {
 /* *** */
 
 article {
-  flex-grow: 1; /* this is only for the flexbox option if you turn it on */
+  flex-grow: 1; /* for the flexbox option */
   border: 1px solid black;
   background-color: lightskyblue;
   margin: 0.5em;
