@@ -9,7 +9,13 @@
         <!-- <link rel="import" href="main.shtml"> -->
         <!-- #include file="main.shtml" -->
   4. html, body { height: 100%; margin: 0; }
+  5. grid question, grid size, container size, on the grid only version
+  6. Default file name?  
+        script.js, main.js, ... function.js, utils.js 
+        index.js is used by other systems?  so maybe not a good choice?
 */
+
+
 
 /* this is what makes it fill the viewport */
 /* this was ommitted from the discussion, demos, and sample files */
