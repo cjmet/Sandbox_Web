@@ -3,6 +3,7 @@
 /* 
   Questions: 
   1. Container Query
+        Media Query will break if nav size changes.
   2. --grid-item-tmp: calc(100% / var(--grid-item-avg-width));
   3. rel = "import"  (deprecated) and Modular html and css
         <!-- <object type="text/html" data="main.shtml"></object> -->
@@ -13,6 +14,7 @@
   6. Default file name?  
         script.js, main.js, ... function.js, utils.js 
         index.js is used by other systems?  so maybe not a good choice?
+  7. html skeleton and framework, review.
 */
 
 
