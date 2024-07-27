@@ -1,0 +1,276 @@
+/* CSS for the fixed navigation bar */
+
+/* 
+  To-Do:
+  1. Fix the other grid header
+  2. Convert the grid to scrolling page
+
+  Questions: 
+  1. Container Query
+        Media Query will break if nav size changes.
+  2. --grid-item-tmp: calc(100% / var(--grid-item-avg-width));
+  3. rel = "import"  (deprecated) and Modular html and css
+        <!-- <object type="text/html" data="main.shtml"></object> -->
+        <!-- <link rel="import" href="main.shtml"> -->
+        <!-- #include file="main.shtml" -->
+  4. html, body { height: 100%; margin: 0; }
+  5. grid question, grid size, container size, on the grid only version
+  6. Default file name?  
+        script.js, main.js, ... function.js, utils.js 
+        index.js is used by other systems?  so maybe not a good choice?
+  7. html skeleton and framework, review.
+*/
+
+
+
+/* this is what makes it fill the viewport */
+/* this was ommitted from the discussion, demos, and sample files */
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+/* 4 sides */
+/* top/bottom, left/right */
+/* top, left/right, bottom */
+/* top, right, bottom, left */
+
+body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: min-content 1fr auto;
+  grid-template-areas:
+    "header header"
+    "nav main"
+    "footer footer";
+}
+
+.DocumentHeader {
+  grid-area: header;
+  border: 3px solid purple;
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  color: white;
+  padding: 0.5em;
+  text-align: left;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.DocumentHeader a {
+  color: white;
+  margin-left: 1em;
+  text-decoration: none;
+}
+
+.MainNavLeft {
+  grid-area: nav;
+  border: 3px solid blue;
+  background-color: #666;
+  color: white;
+  padding: 0.5em;
+  margin: 0;
+  text-align: left;
+  text-wrap: nowrap;
+  /* overflow: hidden;  */
+}
+
+.MainNavLeft > h1,
+.MainNavLeft > h2,
+.MainNavLeft > h3,
+.MainNavLeft > h4,
+.MainNavLeft > h5,
+.MainNavLeft > h6 {
+  margin: 0.5em 0.1em;
+}
+
+.MainNavLeft a {
+  display: block;
+  color: white;
+  padding: 0 0.5em 0.25em 1em;
+  text-decoration: none;
+}
+
+/* ================================================ */
+main {
+  grid-area: "main";
+  border: 5px solid green;
+  background-color: #c0ebc0;
+  margin: 0;
+  padding: 0;
+  /* height: auto; */
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* align-content: stretch;
+  justify-content: stretch; */
+}
+
+.MainDataTitle {
+  margin: 5px;
+  border: 3px solid black;
+  background-color: wheat;
+  text-align: center;
+}
+
+.MainDataArticles {
+  container-type: size;
+  container-name: MainContainer;
+
+  flex-grow: 1;
+  height: min-content;
+  margin: 5px;
+  border: 3px solid lightcoral;
+  background-color: lightgray;
+
+  /* ***************************************************************** */
+  /* ***************************************************************** */
+  /* https://css-tricks.com/an-auto-filling-css-grid-with-max-columns/ */
+
+  /** User input values. */
+  --grid-item-avg-width: 560px;
+
+  /** Calculated values. */
+  --grid-item-tmp: calc(100% / var(--grid-item-avg-width));
+  /* This is where it goes wrong.  A units / length-type issue.  If I put the unit in by had it works. */
+  /* there are old unit rules and new unit rules.  varies by browser. Not sure if either will work. */
+  /* --grid-item-tmp: 1.5; */
+  --grid-item-columns: round(var(--grid-item-tmp), 1);
+  --grid-min-width: round(down, calc(100% / var(--grid-item-columns)), 1px);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--grid-min-width), 1fr));
+
+  /* display: grid; */
+  /* grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); */
+  /* grid-template-columns: repeat(auto-fit, minmax(330px, max-content)); */
+  /* grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); */
+  /* grid-template-columns: repeat(auto-fit, fit-content(300px); */
+
+  /* how do we get this to work with this grid? */
+  /* grid-auto-flow: dense;   */
+  /* grid-auto-rows: max-content;  */
+  /* grid-auto-columns: max-content;   */
+  /* align-content: space-evenly; */
+  /* justify-content: space-evenly;  */
+
+  /* ***************************************************************** */
+  /* ***************************************************************** */
+
+  display: grid;
+  /* overflow: auto; */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+  /* Flexbox option.  This option is working how I intended. */
+  /* display: flex;
+  flex-flow: row wrap; */
+}
+
+/* @container .MainContainer (min-width: 1px) { */
+/* the media query only works because we know the width of the nav. */
+/* I'd much rather use a container query */
+/* 185 + 560, 445, 300* */
+@media (min-width: 720px) {
+  .MainDataArticles {
+    grid-template-columns: minmax(445px, 1fr);
+    /* background-color: magenta; */
+  }
+}
+
+/* 185 + 560, 445, 300* */
+@media (min-width: 930px) {
+  .MainDataArticles {
+    grid-template-columns: minmax(445px, 1fr) minmax(300px, 1fr);
+  }
+}
+
+/* 185 + 560, 445, 300* */
+@media (min-width: 1490px) {
+  .MainDataArticles {
+    grid-template-columns: minmax(560px, 1fr) minmax(445px, 1fr) repeat(
+        auto-fit,
+        minmax(300px, 1fr)
+      );
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .MainNavLeft {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+
+  .MainNavLeft > h1,
+  .MainNavLeft > h2,
+  .MainNavLeft > h3,
+  .MainNavLeft > h4,
+  .MainNavLeft > h5,
+  .MainNavLeft > h6 {
+    display: none;
+  }
+
+  main {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+  }
+
+  .MainDataTitle {
+    margin: 5px;
+    border: 3px solid black;
+    background-color: wheat;
+    text-align: center;
+  }
+
+  .MainDataArticles {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;  /* for the flexbox option */
+    overflow: auto;
+  }
+}
+
+/* *** */
+
+article {
+  flex-grow: 1; /* for the flexbox option */
+  border: 1px solid black;
+  background-color: lightskyblue;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+/* ===============================================  */
+
+footer {
+  grid-area: footer;
+  border: 3px solid purple;
+  background-color: #333;
+  color: white;
+  text-align: right;
+}
+
+footer > p {
+  margin: 0;
+  padding: 0.1em 0.5em;
+  font-size: small;
+}
+
+.HeaderWithDescription {
+  margin-bottom: 0.1em;
+}
+
+.HeaderDescription {
+  margin-top: 0.1em;
+  font-size: small;
+}
