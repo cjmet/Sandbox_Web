@@ -1,6 +1,10 @@
 /* CSS for the fixed navigation bar */
 
 /* 
+  To-Do:
+  1. Fix the other grid header
+  2. Convert the grid to scrolling page
+
   Questions: 
   1. Container Query
         Media Query will break if nav size changes.
