@@ -1,6 +1,5 @@
 # Sandbox_Web
-Just a place to play with web code while we are learning. <br>
-Looks like I'm building a Pet Shop this week?
+Just a place to play with web code while learning. <br>
 
 <br>
 
