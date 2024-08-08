@@ -20,11 +20,6 @@ body {
   margin: 0;
 }
 
-/* 4 sides */
-/* top/bottom, left/right */
-/* top, left/right, bottom */
-/* top, right, bottom, left */
-
 body {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -92,9 +87,6 @@ main {
 
   display: flex;
   flex-direction: column;
-
-  /* This seems to interact with flex grow of the article too? */
-  /* flex-wrap: wrap; */  
 }
 
 .MainDataTitle {
@@ -111,7 +103,7 @@ main {
   background-color: lightgray;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 
   /* Flexbox option.  This option is working how I intended. */
   /* display: flex;
@@ -127,6 +119,67 @@ article {
   margin: 0.5em;
   padding: 0.5em;
 }
+/* ===============================================  */
+
+/* ===============================================  */
+/* Container Queries ============================== */
+
+article {
+  /* container-type: interacts with grid and flex sizes and alignments */
+  container-type: inline-size;
+}
+
+
+@container (min-width: 250px) {
+  article h3 {
+    font-size: x-small;
+    color: magenta;
+  }
+}
+
+@container (min-width: 300px) {
+  article h3 {
+    font-size: small;
+    color: red;
+  }
+}
+
+@container (min-width: 350px) {
+  article h3 {
+    font-size: medium;
+    color: darkgreen
+  }
+}
+
+@container (min-width: 400px) {
+  article h3 {
+    font-size: large;
+    color: blue;
+  }
+}
+
+@container (min-width: 450px) {
+  article h3 {
+    font-size: x-large;
+    color: purple;
+  }
+}
+
+@container (min-width: 500px) {
+  article h3 {
+    font-size: xx-large;
+    color: black;
+  }
+}
+
+@container (min-width: 550px) {
+  article h3 {
+    font-size: xxx-large;
+    color: white;
+  }
+}
+
+/* /Container Queries ============================== */
 /* ===============================================  */
 
 footer {
