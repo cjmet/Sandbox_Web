@@ -78,6 +78,7 @@ body {
 }
 
 /* ================================================ */
+/* Main =========================================== */
 main {
   grid-area: "main";
   border: 5px solid green;
@@ -105,6 +106,18 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 
+  /* ===============================================  */
+  /* Mathemanai - average width of grid items */
+
+  /* --grid-item-avg-width: 300px; 
+  --grid-item-container-width: 100%;
+  --grid-item-tmp: calc(var(--grid-item-container-width) / var(--grid-item-avg-width));
+  --grid-item-num: calc(100% / var(--grid-item-tmp));
+  grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-num), 1fr)); */
+
+  /* /Mathemanai ==================================== */
+  /* ===============================================  */
+
   /* Flexbox option.  This option is working how I intended. */
   /* display: flex;
   flex-flow: row wrap; */
@@ -119,60 +132,93 @@ article {
   margin: 0.5em;
   padding: 0.5em;
 }
+/* /Main =========================================== */
 /* ===============================================  */
+
+/* ================================================ */
+/* Math =========================================== */
+
+@property --100vw {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
+#MathTarget::before {
+    --math: tan(atan2(12s /10 + 3ms, 1ms));
+    --100vw: 100vw;
+    --pixie: tan(atan2(var(--100vw), 1px));
+    counter-reset: math var(--math) pixie var(--pixie);
+
+    content: "Numeric value is: " counter(math) " <small>(ms)</small> - " counter(pixie) " (px)";
+    /* counter should print 1203 */
+    /* counter is severely limited in it's ability to print numbers */
+    /* 12003 fails while 1203 does not. */
+  }
+
+/* /Math =========================================== */
+/* ===============================================  */
+
+
+
+
 
 /* ===============================================  */
 /* Container Queries ============================== */
 
-article {
-  /* container-type: interacts with grid and flex sizes and alignments */
+/* container-type: interacts with grid and flex sizes and alignments */
+/* article {
   container-type: inline-size;
+  container-name: article-container;
+} */
+
+#ContainerQuery {
+  container: article-container / inline-size;
 }
 
-
-@container (min-width: 250px) {
+@container article-container (min-width: 250px) {
   article h3 {
     font-size: x-small;
     color: magenta;
   }
 }
 
-@container (min-width: 300px) {
+@container article-container (min-width: 300px) {
   article h3 {
     font-size: small;
     color: red;
   }
 }
 
-@container (min-width: 350px) {
+@container article-container (min-width: 350px) {
   article h3 {
     font-size: medium;
-    color: darkgreen
+    color: darkgreen;
   }
 }
 
-@container (min-width: 400px) {
+@container article-container (min-width: 400px) {
   article h3 {
     font-size: large;
     color: blue;
   }
 }
 
-@container (min-width: 450px) {
+@container article-container (min-width: 450px) {
   article h3 {
     font-size: x-large;
     color: purple;
   }
 }
 
-@container (min-width: 500px) {
+@container article-container (min-width: 500px) {
   article h3 {
     font-size: xx-large;
     color: black;
   }
 }
 
-@container (min-width: 550px) {
+@container article-container (min-width: 550px) {
   article h3 {
     font-size: xxx-large;
     color: white;
