@@ -8,7 +8,17 @@ Just a place to play with web code while learning. <br>
 
 ### 24/08/08
 
-- Container Queries!
+- We have **Container Queries**!
+- Container Query by Name and Type.
+- Protozoan Math and Type Casting in CSS
+  - there are some noted support issues. Support is supposedly inbound, but not there yet.
+- How to inspect a CSS variables value?
+  - The answer appears to be that you can not.
+  - You can apply the value and inspect the result, but I'm not sure how useful this will be for math stuff?
+  - You can inspect the value and get the computed formula, but not the result
+  - You can use content and counter(), but precision is abysmal, it breaks on 12003 but not 1203 ... so what is the limit? 8k? 2k?
+  - counter/reset is limited to one use per block, but you can set/reset multiple counters in that one line.
+- Image alignment wonkiness best practices?  I used margins and EMs and eyeballs.
 
 ### 24/07/20
 
