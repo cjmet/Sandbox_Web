@@ -1,14 +1,11 @@
 /* CSS for the fixed navigation bar */
 
-/* 
+/*
   To-Do:
     * Collapse the header as we scroll?
-    * Container Query
-    * --grid-item-tmp: calc(100% / var(--grid-item-avg-width));
-    * #include file="main.shtml"
 
-  Questions: 
-    * ... 
+  Questions:
+    * How do I make this work with #ContainerMath instead of #ContainerMath::after ?  Replacing the current content?
 
 */
 
@@ -77,8 +74,9 @@ body {
   text-decoration: none;
 }
 
-/* ================================================ */
-/* Main =========================================== */
+/* ========================================================================
+   Main */
+
 main {
   grid-area: "main";
   border: 5px solid green;
@@ -106,19 +104,7 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 
-  /* ===============================================  */
-  /* Mathemanai - average width of grid items */
-
-  /* --grid-item-avg-width: 300px; 
-  --grid-item-container-width: 100%;
-  --grid-item-tmp: calc(var(--grid-item-container-width) / var(--grid-item-avg-width));
-  --grid-item-num: calc(100% / var(--grid-item-tmp));
-  grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-num), 1fr)); */
-
-  /* /Mathemanai ==================================== */
-  /* ===============================================  */
-
-  /* Flexbox option.  This option is working how I intended. */
+  /* OPTION: Flexbox option.  This option is working how I intended. */
   /* display: flex;
   flex-flow: row wrap; */
 
@@ -132,45 +118,108 @@ article {
   margin: 0.5em;
   padding: 0.5em;
 }
-/* /Main =========================================== */
-/* ===============================================  */
+/* /Main 
+=========================================================================== */
 
-/* ================================================ */
-/* Math =========================================== */
+/* ========================================================================
+   Mathemanai 
+    * ANY error in the final compiled forumla will cause the entire 
+        formula to fail, including all 'previous' steps.
+    * Can NOT mix units in the same formula.
+    * Can Convert to numeric with tan(atan2(X Units, 1 Unit));
+    * can NOT divide Units by Units, only numbers.  
+        100px / 2px = fail? 100px / 2 = 50px
+    * variables are WORM Cascade, Write Once Read Many and Cascade, and
+        variables can not reference themselves, and they are redefined by 
+        by the last definition found in the file. Variables are not
+        really WORM. More accurately it's probably: 
+          Read the File, Define the Variables, Assign the Variables, 
+          Read the file again and execute the definitions.
+    * WORM
+      --pixie: 1500;
+      --pixies: calc(var(--pixie) / 3);
+      --pixie: 1000;
+      var(--pixies) now equals 333;
+    * counter is limited in precision
+    ...
 
+*/
+
+/* Force Pixels */
 @property --100vw {
   syntax: "<length>";
   initial-value: 0px;
   inherits: false;
 }
 
+/* Force Integer */
+@property --ToInt {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
 #MathTarget::before {
-    --math: tan(atan2(12s /10 + 3ms, 1ms));
-    --100vw: 100vw;
-    --pixie: tan(atan2(var(--100vw), 1px));
-    counter-reset: math var(--math) pixie var(--pixie);
+  --math: tan(atan2(12s + 3ms, 1ms));
 
-    content: "Numeric value is: " counter(math) " <small>(ms)</small> - " counter(pixie) " (px)";
-    /* counter should print 1203 */
-    /* counter is severely limited in it's ability to print numbers */
-    /* 12003 fails while 1203 does not. */
+  --100vw: 100vw;
+  --grid-item-avg: 300px;
+  --grid-item-tmp: calc(
+    tan(atan2(var(--100vw), 1px)) / tan(atan2(var(--grid-item-avg), 1px))
+  );
+  --grid-item-100x: calc(100 * var(--grid-item-tmp));
+  --ToInt: var(--grid-item-tmp);
+  --grid-item-num: calc(var(--100vw) / var(--ToInt));
+
+  /* prettier-ignore */
+  counter-reset: 
+    CA tan(atan2(var(--100vw), 1px)) 
+    CB tan(atan2(var(--grid-item-avg), 1px)) 
+    CC var(--grid-item-100x) 
+    CD var(--ToInt) 
+    CE tan(atan2(var(--grid-item-num), 1px))
+    ;
+
+  /* prettier-ignore */
+  content: "Math: " counter(CA) " / " counter(CB) " = " counter(CC) " int/100 = " counter(CD) " /= " counter(CE);
+
+  /* counter should print 1203 🧱 */
+  /* counter is severely limited in it's ability to print numbers */
+  /* 12003 fails while 1203 does not. */
+}
+
+/* /Mathemanai 
+=========================================================================== */
+
+/* ========================================================================
+   Container Queries 
+
+    container-type: interacts with grid and flex sizes and alignments
+    article {
+      container-type: inline-size;
+      container-name: article-container;
+    } 
+*/
+
+#ContainerMath {
+  container: container-math / inline-size;
+}
+
+/* Force Pixels */
+@property --container-width {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
+@container container-math (min-width: 0) {
+  #ContainerMath::after {
+    --container-width: 100cqw;
+
+    counter-reset: CM tan(atan2(var(--container-width), 1px));
+    content: "Container Math: " counter(CM);
   }
-
-/* /Math =========================================== */
-/* ===============================================  */
-
-
-
-
-
-/* ===============================================  */
-/* Container Queries ============================== */
-
-/* container-type: interacts with grid and flex sizes and alignments */
-/* article {
-  container-type: inline-size;
-  container-name: article-container;
-} */
+}
 
 #ContainerQuery {
   container: article-container / inline-size;
@@ -225,8 +274,8 @@ article {
   }
 }
 
-/* /Container Queries ============================== */
-/* ===============================================  */
+/* /Container Queries 
+=========================================================================== */
 
 footer {
   grid-area: footer;
