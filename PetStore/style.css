@@ -251,13 +251,15 @@ main {
       CC tan(atan2(var(--ToInt), 1))
       CD tan(atan2(var(--grid-min), 1px)) 
       CE tan(atan2(var(--var-min), 1px))
+      CF tan(atan2(var(--grid-avg), 1px))
       ;
     /* prettier-ignore */
 
     content: 
       "MAIN:: "
-      " viewport: " counter(CA) 
-      " container: " counter(CB)
+      " Viewport: " counter(CA) 
+      " Container: " counter(CB)
+      " Target: " counter(CF)
       " ToInt: " counter(CC)
       " grid-min: " counter(CD)
       " var-min: " counter(CE)
