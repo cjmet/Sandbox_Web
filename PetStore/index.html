@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -34,19 +34,22 @@
       <a href="#tigers">Tigers</a>
     </nav>
 
-    <main>
+    <main id="Main">
       <!-- <object type="text/html" data="main.shtml"></object> -->
       <!-- <link rel="import" href="main.shtml"> -->
       <!-- #include file="main.shtml" -->
-      <header class="MainDataTitle">
-        <h2 class="HeaderWithDescription" id="MainDataTitleId">Main Document Content</h2>
+      <header id="MDT" class="MainDataTitle">
+        <h2 class="HeaderWithDescription" id="MainDataTitleId">
+          Main Document Content
+        </h2>
         <p class="HeaderDescription" id="MainDataDescriptionId">
           Shrinking this vertically appears to be a challenge.
         </p>
       </header>
-      
-      <section class="MainDataArticles">
 
+      <div id="MIB" class="MIB"></div>
+      
+      <section id="MDR" class="MainDataArticles MDR">
         <article id="ContainerQuery">
           <header>
             <h3 class="HeaderWithDescription">
@@ -57,7 +60,8 @@
             </p>
           </header>
           <p>Hello, world! (article > paragraph)</p>
-          <p id="ContainerParagraph"></p>
+          <p id="ParagraphTarget"></p>
+
           <!-- <p>
             paragraph 3 (article > paragraph) _ _ _ . . . _ _ _ . . . _ _ _ . .
             . _ _ _ . . . _ _ _ . . . _ _ _ . . . _ _ _ . . . _ _ _ . . . _
@@ -74,13 +78,12 @@
         <article>
           <header>
             <h3>2: Hello World! It's a Mathematical World!</h3>
-            <p id="MathTarget"></p>
           </header>
         </article>
 
         <article>
           <header>
-            <h3>3: Hello World! It's a Beautiful World!</h3>
+            <h3>3: Hello World! It's a Testy World!</h3>
           </header>
         </article>
 
@@ -122,7 +125,6 @@
             <h3>9: Hello World! It's an Alternate World #9</h3>
           </header>
         </article>
-
       </section>
     </main>
 
@@ -131,6 +133,6 @@
     </footer>
 
     <script src="./functions.js"></script>
-    <script src="./script.js"></script> 
+    <script src="./script.js"></script>
   </body>
 </html>

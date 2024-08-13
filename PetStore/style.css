@@ -99,20 +99,6 @@ main {
   text-align: center;
 }
 
-/* Force Pixels */
-@property --mda {
-  syntax: "<length>";
-  initial-value: 0px;
-  inherits: false;
-}
-
-/* Force Integer */
-@property --grid-int {
-  syntax: "<integer>";
-  initial-value: 0;
-  inherits: false;
-}
-
 .MainDataArticles {
   flex-grow: 1;
   margin: 5px;
@@ -120,15 +106,7 @@ main {
   background-color: lightgray;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-
-  --mda: 100cqw;
-  --grid-avg: 300px;
-  /* prettier ignore */
-  --grid-int: calc( tan(atan2(var(--mda), 1px)) / tan(atan2(var(--grid-avg), 1px)) );
-  --grid-width: calc(var(--mda) / var(--grid-int));
-
-  grid-template-columns: repeat(auto-fit, minmax(var(--grid-width), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 
   /* OPTION: Flexbox option.  This option is working how I intended. */
   /* display: flex;
@@ -148,7 +126,10 @@ article {
 =========================================================================== */
 
 /* ========================================================================
-   Mathemanai 
+  Mathemanai 
+    * You can do container math without the container query, but it targets
+         the parent, aka container of the current element.
+    * Chrome is less durable than Firefox for CSS Math Failures
     * ANY error in the final compiled forumla will cause the entire 
         formula to fail, including all 'previous' steps.
     * Can NOT mix units in the same formula.
@@ -166,13 +147,26 @@ article {
       --pixies: calc(var(--pixie) / 3);
       --pixie: 1000;
       var(--pixies) now equals 333;
-    * counter is limited in precision
-    ...
+    * counter may be limited in precision
+    
+  Container Queries 
+    * container-type: interacts with grid and flex sizes and alignments 
+    * parent container query CAN control display: for children
+    * container can NOT control display: for self
+    * sibling can NO control display: for siblings
+    * cqw: width - borders and padding and adjusted for dpi
+    * vw: viewport width
 
 */
 
 /* Force Pixels */
 @property --100vw {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
+@property --cqw {
   syntax: "<length>";
   initial-value: 0px;
   inherits: false;
@@ -185,33 +179,93 @@ article {
   inherits: false;
 }
 
-#MathTarget::after {
-  --math: tan(atan2(12s + 3ms, 1ms));
+/* MIB - Sibling */
+#MIB {
+  container: MIB / inline-size;
+  margin: 5px;
+  border: 3px solid blue;
+}
 
-  --100vw: 100vw;
-  --grid-item-avg: 300px;
-  --grid-item-tmp: calc(
-    tan(atan2(var(--100vw), 1px)) / tan(atan2(var(--grid-item-avg), 1px))
-  );
-  --grid-item-100x: calc(100 * var(--grid-item-tmp));
-  --ToInt: var(--grid-item-tmp);
-  --grid-item-num: calc(var(--100vw) / var(--ToInt));
+@container MIB (min-width: 0px) {
+  ::before {
+    --100vw: 100vw;
+    --cqw: 100cqw;
 
-  /* prettier-ignore */
-  counter-reset: 
-    CA tan(atan2(var(--100vw), 1px)) 
-    CB tan(atan2(var(--grid-item-avg), 1px)) 
-    CC var(--grid-item-100x) 
-    CD var(--ToInt) 
-    CE tan(atan2(var(--grid-item-num), 1px))
-    ;
+    /* prettier-ignore */
+    counter-reset: CA tan(atan2(var(--100vw), 1px)) CB tan(atan2(var(--cqw), 1px));
+    content: "MIB::   viewport: " counter(CA) " container: " counter(CB);
+  }
+  #MDR {
+    display: grid;
+    grid-template-columns: 125px;
+  }
+}
 
-  /* prettier-ignore */
-  content: "Math: " counter(CA) " / " counter(CB) " = " counter(CC) " int/100 = " counter(CD) " /= " counter(CE);
+/* MDR - Self */
+.MDR {
+  container: MDR / inline-size;
+}
 
-  /* counter should print 1203 🧱 */
-  /* counter is severely limited in it's ability to print numbers */
-  /* 12003 fails while 1203 does not. */
+@container MDR (min-width: 0px) {
+  #MDR {
+    display: grid;
+    grid-template-columns: 125px;
+  }
+  #MDR::before {
+    --100vw: 100vw;
+    --cqw: 100cqw;
+
+    /* prettier-ignore */
+    counter-reset: CA tan(atan2(var(--100vw), 1px)) CB tan(atan2(var(--cqw), 1px));
+    content: "MDR::   viewport: " counter(CA) " container: " counter(CB);
+  }
+}
+
+/* Main - Parent */
+main {
+  container: ContainerMain / inline-size;
+}
+
+@container ContainerMain (min-width: 0px) {
+  main::before,
+  #MDR {
+    --100vw: 100vw;
+    --100vw-num: tan(atan2(var(--100vw), 1px));
+    --cqw: 100cqw;
+    /* adjust for the margins, padding, and borders */
+    --cqw-offset: calc(var(--cqw) - 15px);
+    --cqw-num: tan(atan2(var(--cqw-offset), 1px));
+
+    /* --grid-avg: 330px; */
+    /* absolute min 320 * 2 / 1.5 = 426.6666666666667 */
+    --grid-avg: 427px;  
+    --grid-avg-num: tan(atan2(var(--grid-avg), 1px));
+    --ToInt: calc(var(--cqw-num) / var(--grid-avg-num));
+    --grid-min: calc(var(--cqw-offset) / var(--ToInt));
+    --var-min: min(var(--grid-min), var(--grid-avg));
+
+    /* prettier-ignore */ 
+    counter-reset: 
+      CA tan(atan2(var(--100vw), 1px)) 
+      CB tan(atan2(var(--cqw-num), 1))
+      CC tan(atan2(var(--ToInt), 1))
+      CD tan(atan2(var(--grid-min), 1px)) 
+      CE tan(atan2(var(--var-min), 1px))
+      ;
+    /* prettier-ignore */
+
+    content: 
+      "MAIN:: "
+      " viewport: " counter(CA) 
+      " container: " counter(CB)
+      " ToInt: " counter(CC)
+      " grid-min: " counter(CD)
+      " var-min: " counter(CE)
+      ;
+    display: grid;
+    
+    grid-template-columns: repeat(auto-fit, minmax(var(--var-min), 1fr));
+  }
 }
 
 /* /Mathemanai 
@@ -223,104 +277,6 @@ article {
     * cqw: width - borders and padding and adjusted for dpi
     * vw: viewport width
 */
-
-#ContainerQuery {
-  /* container-type: interacts with grid and flex sizes and alignments */
-  container: article-container / inline-size;
-}
-
-main {
-  /* container-type: interacts with grid and flex sizes and alignments */
-  container: main-container / inline-size;
-  display: flex;
-  }
-
-/* Force Pixels */
-@property --container-width {
-  syntax: "<length>";
-  initial-value: 0px;
-  inherits: false;
-}
-
-@container main-container (min-width: 0) { 
-  main::before {
-    --100vw: 100vw;
-    --container-width: 100cqw;
-
-    counter-reset: ViewPort tan(atan2(var(--100vw), 1px)) ContainerWidth tan(atan2(var(--container-width), 1px));
-    content: "ViewPort: " counter(ViewPort) " - Container(Main?): " counter(ContainerWidth);
-  }
-}
-
-/* cjm */
-@container article-container (min-width: 0) {
-  #ContainerQuery::before {
-    --100vw: 100vw;
-    --container-width: 100cqw;
-
-    counter-reset: ViewPort tan(atan2(var(--100vw), 1px)) ContainerWidth tan(atan2(var(--container-width), 1px));
-    content: "ViewPort: " counter(ViewPort) " - Container(Article?): " counter(ContainerWidth);
-  }
-
-  #ContainerParagraph::before {
-    --100vw: 100vw;
-    --container-width: 100cqw;
-
-    counter-reset: ViewPort tan(atan2(var(--100vw), 1px)) ContainerWidth tan(atan2(var(--container-width), 1px));
-    content: "ViewPort: " counter(ViewPort) " - Container(Paragraph?): " counter(ContainerWidth);
-  }
-}
-
-
-
-@container article-container (min-width: 250px) {
-  article h3 {
-    font-size: x-small;
-    color: magenta;
-  }
-}
-
-@container article-container (min-width: 300px) {
-  article h3 {
-    font-size: small;
-    color: red;
-  }
-}
-
-@container article-container (min-width: 350px) {
-  article h3 {
-    font-size: medium;
-    color: darkgreen;
-  }
-}
-
-@container article-container (min-width: 400px) {
-  article h3 {
-    font-size: large;
-    color: blue;
-  }
-}
-
-@container article-container (min-width: 450px) {
-  article h3 {
-    font-size: x-large;
-    color: purple;
-  }
-}
-
-@container article-container (min-width: 500px) {
-  article h3 {
-    font-size: xx-large;
-    color: black;
-  }
-}
-
-@container article-container (min-width: 550px) {
-  article h3 {
-    font-size: xxx-large;
-    color: white;
-  }
-}
 
 /* /Container Queries 
 =========================================================================== */
