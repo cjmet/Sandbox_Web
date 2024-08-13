@@ -4,10 +4,58 @@ Just a place to play with web code while learning. <br>
 
 <br>
 
+## To-Do
+- Shrink the Header on Scroll, then sticky it
+
+## Questions
+- container-type: interacts with grid and flex sizes and alignments.  How do I correct or adjust for this?
+- Is it possible to combined more than one container query into a single content statement?
+- Is there a way to re-write the container query to apply to self? I would rather read self-width instead of parent-width-adjusted-for-margins. alternatively Use an Invisible \<div> parent?
+
 ## Blog
 
-### 24/08/08
+### 24/08/13
+- We finally have the averaging function I wanted.
+- container-type: interacts with grid and flex sizes and alignments. 
+- Added a lot of notes about Math, Container Queries, Container Math, etc.
 
+  ```
+  /* ========================================================================
+    Mathemanai
+      * You can do container math without the container query, but it targets
+          the parent, aka container of the current element.
+      * Firefox is more durable than for CSS Math Failures.  Chrome tends to crash, firefox just returns null, zero, or nulls ALL your math.
+      * ANY error in the final compiled forumla will cause the entire
+          formula to fail, including all 'previous' steps.
+      * Can NOT mix units in the same formula.
+      * Can Convert to numeric with tan(atan2(X Units, 1 Unit));
+      * can NOT divide Units by Units, only numbers.
+          100px / 2px = fail? 100px / 2 = 50px
+      * variables are WORM Cascade, Write Once Read Many and Cascade, and
+          variables can not reference themselves, and they are redefined by
+          by the last definition found in the file. Variables are not
+          really WORM. More accurately it's probably:
+            Read the File, Define the Variables, Assign the Variables,
+            Read the file again and execute the definitions.
+      * WORM
+        --pixie: 1500;
+        --pixies: calc(var(--pixie) / 3);
+        --pixie: 1000;
+        var(--pixies) now equals 333;
+      * counter may be limited in precision
+
+    Container Queries
+      * container-type: interacts with grid and flex sizes and alignments
+      * parent container query CAN control display: for children
+      * container can NOT control display: for self
+      * sibling can NO control display: for siblings
+      * cqw: width - borders and padding and adjusted for dpi
+      * vw: viewport width
+
+  */
+  ```
+
+### 24/08/08
 - We have **Container Queries**!
 - Container Query by Name and Type.
 - Protozoan Math and Type Casting in CSS
@@ -18,24 +66,25 @@ Just a place to play with web code while learning. <br>
   - You can inspect the value and get the computed formula, but not the result
   - You can use content and counter(), but precision is abysmal, it breaks on 12003 but not 1203 ... so what is the limit? 8k? 2k?
   - counter/reset is limited to one use per block, but you can set/reset multiple counters in that one line.
-- Image alignment wonkiness best practices?  I used margins and EMs and eyeballs.
+- Image alignment wonkiness best practices? I used margins and EMs and eyeballs.
 
 ### 24/07/20
+- Notes
 
-```
-/* this is what makes it fill the viewport */
-/* this was ommitted from the discussion and demos */
-html,
-body {
-height: 100%;
-margin: 0;
-}
-```
+  ```
+  /* this is what makes it fill the viewport */
+  /* this was ommitted from the discussion and demos */
+  html,
+  body {
+  height: 100%;
+  margin: 0;
+  }
+  ```
 
-```
-/* align-content, justify-content, flex-grow; all interact. */
-/* content automatically grows perpendicular, toggle grow for parralel */
-/* toggle grow if you want to modify the justify/align parralel */
-/* align-content: space-around; */
-/* justify-content: space-around; */
-```
+  ```
+  /* align-content, justify-content, flex-grow; all interact. */
+  /* content automatically grows perpendicular, toggle grow for parralel */
+  /* toggle grow if you want to modify the justify/align parralel */
+  /* align-content: space-around; */
+  /* justify-content: space-around; */
+  ```

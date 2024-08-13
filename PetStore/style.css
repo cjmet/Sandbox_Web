@@ -1,18 +1,3 @@
-/* CSS for the fixed navigation bar */
-
-/*
-  To-Do:
-    * Collapse the header as we scroll?
-    * Math is still buggy on the MainDataArticles
-
-  Questions:
-    * How do I make this work with #ContainerMath instead of #ContainerMath::after ?  Replacing the current content?
-    * container-type: interacts with grid and flex sizes and alignments.  How do I correct or adjust for this? 
-      * use something that doesn't render visibly to measure by?
-    * Is it possible to combined more than one container query into a single content statement?
-
-*/
-
 /* this is what makes it fill the viewport */
 /* this was ommitted from the discussion, demos, and sample files */
 html,
