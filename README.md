@@ -14,6 +14,9 @@ Just a place to play with web code while learning. <br>
 
 ## Blog
 
+### 24/08/14
+- Playing with Animations
+
 ### 24/08/13
 - We finally have the averaging function I wanted.
 - container-type: interacts with grid and flex sizes and alignments. 
