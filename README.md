@@ -14,6 +14,11 @@ Just a place to play with web code while learning. <br>
 
 ## Blog
 
+### 24/08/15
+- More Playing with Animations and Sprites.  
+- Modular Double-Div Animations, that could in the future be controlled by JavaScript.
+  - It's more difficult to repeat modular or grouped animations in pure CSS as there is neither grouping nor delay-after options.
+
 ### 24/08/14
 - Playing with Animations
 

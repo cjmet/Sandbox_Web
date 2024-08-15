@@ -1,0 +1,77 @@
+#animation {
+  /* border: blue 1px solid; */
+  opacity: 0;
+  position: absolute;
+  left: 150px;
+  top: 48px;
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  padding: 0;
+  background-image: url("/PetStore/images/run.png");
+  background-size: fit;
+  background-repeat: no-repeat;
+  background-position: 0;
+}
+
+.DocumentHeader:hover {
+  #animation {
+    animation: sprites 5s steps(1) infinite;
+  }
+}
+
+#Logo:hover {
+  animation: spin 3s linear infinite;
+}
+
+/*  ==========================
+    Alternate Animation Style */
+
+/* #Logo {
+    animation: spin 3s linear infinite;
+    animation-play-state: paused;
+} 
+
+#Logo:hover {
+  animation-play-state: running; 
+} */
+
+/*  /Alternate Animation Style 
+============================== */
+
+#AnimationPath {
+  border: blue 1px solid;
+  opacity: 1;
+  position: absolute;
+  left: 450px;
+  top: 48px;
+  width: 128px;
+  height: 64px;
+  margin: 0;
+  padding: 0;
+}
+
+#AnimationFrame {
+  border: red 1px solid;
+  opacity: 1;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  padding: 0;
+  background-image: url("/PetStore/images/run.png");
+  background-size: fit;
+  background-repeat: no-repeat;
+  background-position: 0;
+}
+
+.DocumentHeader:hover {
+  #AnimationPath {
+    animation: pathing 9s steps(1) infinite;
+  }
+  #AnimationFrame {
+    animation: enter 3s steps(1) 1, run 3s steps(1) 1 3s, exit 3s steps(1) 1 6s;
+  }
+}
