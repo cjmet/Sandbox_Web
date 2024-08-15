@@ -40,7 +40,7 @@
 ============================== */
 
 #AnimationPath {
-  border: blue 1px solid;
+  border: yellow 1px dashed;
   opacity: 1;
   position: absolute;
   left: 450px;
@@ -52,7 +52,7 @@
 }
 
 #AnimationFrame {
-  border: red 1px solid;
+  border: magenta 2px solid;
   opacity: 1;
   position: absolute;
   left: 0px;

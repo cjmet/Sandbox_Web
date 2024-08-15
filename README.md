@@ -9,8 +9,11 @@ Just a place to play with web code while learning. <br>
 
 ## Questions
 - container-type: interacts with grid and flex sizes and alignments.  How do I correct or adjust for this?
-- Is it possible to combined more than one container query into a single content statement?
-- Is there a way to re-write the container query to apply to self? I would rather read self-width instead of parent-width-adjusted-for-margins. alternatively Use an Invisible \<div> parent?
+- Is it possible to combine multiple different containers into a query?
+- Is there a way to re-write the container query to apply the display-type? changes to self or sibling? I would rather read self-width instead of parent-width-adjusted-for-margins. 
+- Alternatively Use an Invisible \<div> parent? But you would still need to adjust for the interactions issue noted above.
+
+
 
 ## Blog
 
@@ -18,6 +21,7 @@ Just a place to play with web code while learning. <br>
 - More Playing with Animations and Sprites.  
 - Modular Double-Div Animations, that could in the future be controlled by JavaScript.
   - It's more difficult to repeat modular or grouped animations in pure CSS as there is neither grouping nor delay-after options.
+    - You can add a delay after using keyframes, but then the animations become non-modular, and I was purposefully looking at modular design.
 
 ### 24/08/14
 - Playing with Animations
