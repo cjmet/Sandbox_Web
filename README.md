@@ -8,7 +8,7 @@ Just a place to play with web code while learning. <br>
 - Shrink the Header on Scroll, then sticky it
 
 ## Questions
-- container-type: interacts with grid and flex sizes and alignments.  How do I correct or adjust for this?
+- Container-Type: interacts with grid and flex sizes and alignments.  How do I correct or adjust for this?
 - Is it possible to combine multiple different containers into a query?
 - Is there a way to re-write the container query to apply the display-type? changes to self or sibling? I would rather read self-width instead of parent-width-adjusted-for-margins. 
 - Alternatively Use an Invisible \<div> parent? But you would still need to adjust for the interactions issue noted above.

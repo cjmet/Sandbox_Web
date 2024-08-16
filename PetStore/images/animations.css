@@ -27,14 +27,14 @@
 /*  ==========================
     Alternate Animation Style */
 
-/* #Logo {
+#Logo {
     animation: spin 3s linear infinite;
     animation-play-state: paused;
 } 
 
 #Logo:hover {
   animation-play-state: running; 
-} */
+}
 
 /*  /Alternate Animation Style 
 ============================== */
