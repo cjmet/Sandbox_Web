@@ -5,7 +5,12 @@ Just a place to play with web code while learning. <br>
 <br>
 
 ## To-Do
-- Shrink the Header on Scroll, then sticky it
+- [ ] Weather API
+  - [ ] Everything ... 
+  - [ ] Scan historical shortForecasts for keyword parsing to create icons
+
+<!-- Older Things To Do -->
+- [ ] Shrink the Header on Scroll, then sticky it
 
 ## Questions
 - Container-Type: interacts with grid and flex sizes and alignments.  How do I correct or adjust for this?
@@ -16,6 +21,10 @@ Just a place to play with web code while learning. <br>
 
 
 ## Blog
+
+### 24/08/16
+- Playing with the NOAA NWS Weather API
+  - I can definitely see why people opt for the paid APIs.
 
 ### 24/08/15
 - More Playing with Animations and Sprites.  
