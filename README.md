@@ -22,6 +22,9 @@ Just a place to play with web code while learning. <br>
 
 ## Blog
 
+### 24/08/17
+- Experimented with the OpenWeather API. It's easier for current weather, but isn't going to supply the forecast and information I really want as well as the NWS API.  I might go ahead and use it for current weather, just for convenience, might not.
+
 ### 24/08/16
 - Playing with the NOAA NWS Weather API
   - I can definitely see why people opt for the paid APIs.
