@@ -6,21 +6,29 @@ Just a place to play with web code while learning. <br>
 
 ## To-Do
 - [ ] Weather API
-  - [ ] Everything ... 
+  - [ ] Group Local Storage into objects with JSON strings
+  - [ ] Is there a way to move getlocation into getforecast? instead of location calling forcast?
+  - [ ] Group Functions Together?  Bundle Them?
   - [ ] Scan historical shortForecasts for keyword parsing to create icons
+  - [ ] ... 
 
 <!-- Older Things To Do -->
 - [ ] Shrink the Header on Scroll, then sticky it
 
 ## Questions
+- Is there a way to move getlocation into getforecast? instead of location calling forcast?
+- ...
+
+## Notes
 - Container-Type: interacts with grid and flex sizes and alignments.  How do I correct or adjust for this?
 - Is it possible to combine multiple different containers into a query?
 - Is there a way to re-write the container query to apply the display-type? changes to self or sibling? I would rather read self-width instead of parent-width-adjusted-for-margins. 
 - Alternatively Use an Invisible \<div> parent? But you would still need to adjust for the interactions issue noted above.
 
-
-
 ## Blog
+
+### 24/08/19
+- Experimented more with the NWS API.  Integraged Geolocation and Forecast. Started Adding Local Storage and Caching.
 
 ### 24/08/17
 - Experimented with the OpenWeather API. It's easier for current weather, but isn't going to supply the forecast and information I really want as well as the NWS API.  I might go ahead and use it for current weather, just for convenience, might not.
