@@ -22,6 +22,7 @@ async function getWeatherAsync(lat, lon) {
   // Read Local Storage, if note available, create it
   let cached = JSON.parse(localStorage.getItem("weather"));
   if (cached === null) {
+    console.log("[getWeatherAsync] No Cached Weather Data");
     cached = {
       forecastUrl: "",
       forecastUrlTimeStamp: 0,

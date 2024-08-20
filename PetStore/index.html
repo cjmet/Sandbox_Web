@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <title>Hello World! (title)</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="images/keyframes.css" />
@@ -12,20 +12,22 @@
 
   <body>
     <header class="DocumentHeader">
-      <nav>
-        <img id="Logo"
-          src="images/logo.png"
-          alt="Logo"
-          style="height: 50px; float: inline-start"
-        />
+      <nav id="HeaderNav">
+        <img id="Logo" src="images/logo.png" alt="Logo" height="50" />
 
-        <div id="animation"></div>
+        <div id="Animation"></div>
         <div id="AnimationPath"><div id="AnimationFrame"></div></div>
-        
-        <h1 id="PetShop">The Pet Shop (Flex/Grid Hybrid)</h1>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
+
+        <h1 id="PageTitle">The Pet Shop (Flex/Grid Hybrid)</h1>
+        <div id="MainNav">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+        </div>
       </nav>
+      <div id="WeatherWidget">
+        <div id="WeatherForecast">Mostly Cloudy 21.3C</div>
+        <div id="WeatherImage">Weather Image</div>
+      </div>
     </header>
 
     <nav class="MainNavLeft">
@@ -50,12 +52,12 @@
           Main Document Content
         </h2>
         <p class="HeaderDescription" id="MainDataDescriptionId">
-          Shrinking this vertically appears to be a challenge.
+          Main Document Content Description
         </p>
       </header>
 
       <div id="MIB" class="MIB"></div>
-      
+
       <section id="MDR" class="MainDataArticles MDR">
         <article id="ContainerQuery">
           <header>
