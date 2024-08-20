@@ -12,7 +12,7 @@ async function getLocationCallBack(callBack) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
+        // console.log(position);
         let lon = position.coords.longitude;
         let lat = position.coords.latitude;
         console.log(`[getLocationAsync] Latitude: ${lat}, Longitude: ${lon}`);
