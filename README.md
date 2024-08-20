@@ -6,12 +6,12 @@ Just a place to play with web code while learning. <br>
 
 ## To-Do
 - [ ] Weather API
-  - [ ] Group Local Storage into objects with JSON strings
+  - [ ] Make it pretty ... 
+  <br>
   - [ ] Is there a way to move getlocation into getforecast? instead of location calling forcast?
   - [ ] Group Functions Together?  Bundle Them?
   - [ ] Scan historical shortForecasts for keyword parsing to create icons
-  - [ ] ... 
-
+  
 <!-- Older Things To Do -->
 - [ ] Shrink the Header on Scroll, then sticky it
 
@@ -26,6 +26,9 @@ Just a place to play with web code while learning. <br>
 - Alternatively Use an Invisible \<div> parent? But you would still need to adjust for the interactions issue noted above.
 
 ## Blog
+
+### 24/08/20
+- Wired up the NWS API and Data caching.  Now we have to make it pretty, create or find icons, format it, etc.
 
 ### 24/08/19
 - Experimented more with the NWS API.  Integraged Geolocation and Forecast. Started Adding Local Storage and Caching.

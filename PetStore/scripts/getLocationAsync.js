@@ -5,9 +5,10 @@ console.log("loading getLocationAsync.js");
 async function getLocationCallBack(callBack) {
   let cached = { lat: null, lon: null, timestamp: null };
 
-  cached.lat = localStorage.getItem("locationLat");
-  cached.lon = localStorage.getItem("locationLon");
-  cached.timestamp = localStorage.getItem("locationTimestamp");
+  // localStorage.setItem('user', JSON.stringify(userArray));
+  // const userData = JSON.parse(localStorage.getItem('user'));
+
+  cached = JSON.parse(localStorage.getItem("location"));
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -16,9 +17,10 @@ async function getLocationCallBack(callBack) {
         let lon = position.coords.longitude;
         let lat = position.coords.latitude;
         console.log(`[getLocationAsync] Latitude: ${lat}, Longitude: ${lon}`);
-        localStorage.setItem("locationLat", lat);
-        localStorage.setItem("locationLon", lon);
-        localStorage.setItem("locationTimestamp", Date.now());
+        localStorage.setItem(
+          "location",
+          JSON.stringify({ lat: String(lat), lon: String(lon), timestamp: Date.now() })
+        );
         callBack(lat, lon);
       },
 
