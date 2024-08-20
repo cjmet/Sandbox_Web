@@ -1,4 +1,4 @@
-#animation {
+#Animation {
   /* border: blue 1px solid; */
   opacity: 0;
   position: absolute;
@@ -15,7 +15,7 @@
 }
 
 .DocumentHeader:hover {
-  #animation {
+  #Animation {
     animation: sprites 5s steps(1) infinite;
   }
 }
