@@ -27,6 +27,7 @@
       <div id="WeatherWidget">
         <div id="WeatherForecast">Mostly Cloudy 21.3C</div>
         <div id="WeatherImage">Weather Image</div>
+        <div id ="WeatherToolTip">Weather Tool Tip</div>
       </div>
     </header>
 
@@ -89,8 +90,8 @@
             <h3>2: Hello World! It's a Weather World!</h3>
           </header>
           <div id="WeatherDiv"><button id="WeatherButton">W</button></div>
-          <div id="WeatherForecastDiv"></div>
-          <div id="WeatherMapDiv"></div>
+          <div id="WeatherObservationsDiv">Observations</div>
+          <div id="WeatherForecastDiv">Forecast</div>
         </article>
 
         <article>
@@ -146,7 +147,7 @@
 
     <script src="./scripts/getConfigJSON.js"></script>
     <script src="./scripts/functions.js"></script>
-    <script src="./scripts/getLocationAsync.js"></script>
+    <script src="./scripts/getWeatherLocationAsync.js"></script>
     <script src="./scripts/getWeatherAsync.js"></script>
     <script src="./script.js"></script>
   </body>
