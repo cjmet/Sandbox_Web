@@ -2,7 +2,7 @@
 
 console.log("loading getWeatherAsync.js");
 
-async function getWeatherAsync(lat, lon) {
+async function getWeatherAsync(lat, lon, callBack) {
   console.log(`[getWeatherAsync] Latitude: ${lat}, Longitude: ${lon}`);
   // Get Location and check cached location, ... use, update, etc.
   // check the cached forecasturl, cwa, gridId, gridX, gridY ... use, update, etc.
@@ -31,6 +31,7 @@ async function getWeatherAsync(lat, lon) {
       temperatureUnit: "",
       probabilityOfPrecipitation: -9,
       detailedForecast: "",
+      forecastStartTime: "",
       forecastTimeStamp: "",
       observationStationsUrl: "",
 
@@ -47,6 +48,27 @@ async function getWeatherAsync(lat, lon) {
   }
   console.log("[getWeatherAsync] Cached Weather Data");
   console.log(cached);
+
+  // Deal with Cache-ing of Weather Data
+  /* 
+  var myHeaders = new Headers();
+  myHeaders.append('pragma', 'no-cache');
+  myHeaders.append('cache-control', 'no-cache');
+
+  var myInit = {
+    method: 'GET',
+    headers: myHeaders,
+  };
+  */
+
+  /* 
+  {
+    headers: {
+      'Pragma': 'no-cache',
+      'Cache-Control': 'no-cache'
+    }
+  }
+  */
 
   // Get the forecast URL
   let weatherForecastUrl = "";
@@ -141,7 +163,10 @@ async function getWeatherAsync(lat, lon) {
           `[Observation] Temperature: ${data.features[0].properties.temperature.value}`
         );
         console.log(
-          `[Observation] Temperature Unit: ${data.features[0].properties.temperature.unitCode.replace(/wmoUnit\:deg/i, "")}`
+          `[Observation] Temperature Unit: ${data.features[0].properties.temperature.unitCode.replace(
+            /wmoUnit\:deg/i,
+            ""
+          )}`
         );
         cached.observationTimeStamp = Date.now();
         cached.observationShortText = String(
@@ -174,11 +199,16 @@ async function getWeatherAsync(lat, lon) {
         cached.temperatureUnit = String(
           data.properties.periods[0].temperatureUnit
         );
-        cached.probabilityOfPrecipitation = String(
-          data.properties.periods[0].probabilityOfPrecipitation.value
-        );
+        let rain = data.properties.periods[0].probabilityOfPrecipitation.value;
+        if (rain === null || rain === undefined || rain === "") {
+          rain = 0;
+        }
+        cached.probabilityOfPrecipitation = String(rain);
         cached.detailedForecast = String(
           data.properties.periods[0].detailedForecast
+        );
+        cached.forecastStartTime = String(
+          data.properties.periods[0].startTime
         );
         cached.forecastTimeStamp = Date.now();
         localStorage.setItem("weather", JSON.stringify(cached));
@@ -187,27 +217,7 @@ async function getWeatherAsync(lat, lon) {
     console.log(`[getWeatherAsync] No weatherForecastUrl available`);
   }
 
-  {
-    console.log("[getWeatherAsync] Weather Data HTML");
-    document.getElementById("WeatherDiv").innerHTML =
-      "Current Observations: <br>" +
-      cached.observationTemperature +
-      cached.observationTemperatureUnit +
-      " and " +
-      cached?.observationShortText +
-      "<br> &nbsp <br>" +
-      "Forecast: " +
-      "<br>" +
-      cached?.shortForecast +
-      "<br>" +
-      cached?.temperature +
-      cached?.temperatureUnit.toLowerCase() +
-      "<br>" +
-      cached?.probabilityOfPrecipitation.value +
-      "% chance of precipitation" +
-      "<br>" +
-      cached?.detailedForecast;
-  }
-
+  // Call the callback function
+  callBack(cached);
   console.log("[getWeatherAsync] Done.");
 }

@@ -2,15 +2,21 @@
 
 console.log("loading getLocationAsync.js");
 
-async function getLocationCallBack(callBack) {
+async function getWeatherLocationAsync(callBack) {
   let cached = { lat: null, lon: null, timestamp: null };
 
   // localStorage.setItem('user', JSON.stringify(userArray));
   // const userData = JSON.parse(localStorage.getItem('user'));
 
   cached = JSON.parse(localStorage.getItem("location"));
+  console.log(`[getLocationAsync] Checking Location Data`);
 
-  if (navigator.geolocation) {
+  if (cached.lat != null && cached.lon != null && cached.timestamp != null && cached.timestamp > Date.now() - 60000) {
+    console.log(
+      `[getLocationAsync] Using cached location: ${cached.lat}, ${cached.lon}, ${cached.timestamp}, ${Math.round(60 - (Date.now() - cached.timestamp) / 1000)}s remaining`
+    );
+    getWeatherAsync(cached.lat, cached.lon, callBack);
+  } else if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         // console.log(position);
@@ -19,9 +25,13 @@ async function getLocationCallBack(callBack) {
         console.log(`[getLocationAsync] Latitude: ${lat}, Longitude: ${lon}`);
         localStorage.setItem(
           "location",
-          JSON.stringify({ lat: String(lat), lon: String(lon), timestamp: Date.now() })
+          JSON.stringify({
+            lat: String(lat),
+            lon: String(lon),
+            timestamp: Date.now(),
+          })
         );
-        callBack(lat, lon);
+        getWeatherAsync(lat, lon, callBack);
       },
 
       (error) => {
@@ -30,15 +40,10 @@ async function getLocationCallBack(callBack) {
           console.log(
             `[getLocationAsync] Using cached location: ${cached.lat}, ${cached.lon}, ${cached.timestamp}`
           );
-          callBack(cached.lat, cached.lon);
+          getWeatherAsync(cached.lat, cached.lon, callBack);
         }
       }
     );
-  } else if (cached.lat != null && cached.lon != null) {
-    console.log(
-      `[getLocationAsync] *** ERROR *** \n\t\t Using cached location: ${cached.lat}, ${cached.lon}, ${cached.timestamp}`
-    );
-    callBack(cached.lat, cached.lon);
   } else {
     console.log("Geolocation data is not available.");
   }

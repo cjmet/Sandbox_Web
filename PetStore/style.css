@@ -19,7 +19,7 @@ body {
 #Animation,
 #AnimationPath,
 #AnimationFrame {
-  display: none;
+  display: none; /* cjm */
 }
 
 .DocumentHeader {
@@ -38,31 +38,31 @@ body {
   display: flex;
 }
 
-#HeaderNav { 
+#HeaderNav {
+  /* border: green 1px solid; */
   flex: 1 0 auto;
-  border: green 1px solid;
 }
 
 #Logo {
- float: left;
- margin: 0;
+  float: left;
+  margin: 0;
 }
 
-#PageTitle { 
-  margin: .5em;
+#PageTitle {
+  margin: 0.5em;
 }
 
-#WeatherWidget { 
+/* height: 4.5rem / 72px; */
+#WeatherWidget {
+  /* border: red 1px solid; */
   flex: 0 1 auto;
-  border: red 1px solid;
   width: 9rem;
   height: 4.5rem;
   display: flex;
 }
 
 #WeatherForecast {
-  border: green 1px solid;
-  background-color: rgba(0, 128, 0, 0.15);
+  /* border: green 1px solid; */
   text-align: center;
   align-content: center;
   width: 4.5rem;
@@ -70,12 +70,51 @@ body {
 }
 
 #WeatherImage {
-  border: blue 1px solid;
-  background-color: rgba(0, 255, 255, 0.15);
+  /* border: blue 1px solid; */
   text-align: center;
   align-content: center;
   width: 4.5rem;
   height: 4.5rem;
+}
+
+/* cjm */
+[tooltip]::before {
+  position: absolute;
+  content: attr(tooltip);
+  opacity: 0;
+}
+
+[tooltip]:hover::before {
+  opacity: 1;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
+
+#WeatherToolTip {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  width: 15em;
+  background-color: rgba(0, 0, 0, 0.75);
+  opacity: 0;
+}
+
+#WeatherWidget:hover {
+  background-color: black;
+  color: black;
+  #WeatherToolTip {
+    color: white;
+    opacity: 1;
+  }
+}
+
+#weatherspacer {
+  font-size: 0.33em;
 }
 
 .DocumentHeader a {
@@ -317,16 +356,6 @@ main {
   flex-direction: column;
   align-items: end;
   justify-content: end;
-}
-
-#WeatherButton {
-}
-
-#WeatherForecastDiv,
-#WeatherMapDiv {
-  border: black 1px solid;
-  margin: 1px;
-  display: none;
 }
 
 /* /Mathemanai 

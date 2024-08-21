@@ -6,7 +6,9 @@ Just a place to play with web code while learning. <br>
 
 ## To-Do
 - [ ] Weather API
-  - [ ] Make it pretty ... 
+  - [ ] Make it pretty
+  - [ ] Implement Weather Image
+
   <br>
   - [ ] Is there a way to move getlocation into getforecast? instead of location calling forcast?
   - [ ] Group Functions Together?  Bundle Them?
@@ -16,7 +18,15 @@ Just a place to play with web code while learning. <br>
 - [ ] Shrink the Header on Scroll, then sticky it
 
 ## Questions
+- I'm probably using to many \<div>s.  How can I Improve this?
 - Is there a way to move getlocation into getforecast? instead of location calling forcast?
+- Weather Tooltip overlaps nav?
+  - alternate ways to do this.  The other alternate didn't render html
+  - another another way to do this?
+  - some completely different design
+  - how the heck do you add accessiblity to this?  Or how do you redesign it for accessibility
+  - fetch caching ... I have a couple of options but I'm not sure on how to proceed with actually testing them and knowing if the test suceeded.
+- Is there a way to lockout the async get weather function so you can't call it twice at once?  A static flag maybe? How does java handle this kind of thing?
 - ...
 
 ## Notes
@@ -26,6 +36,14 @@ Just a place to play with web code while learning. <br>
 - Alternatively Use an Invisible \<div> parent? But you would still need to adjust for the interactions issue noted above.
 
 ## Blog
+
+### 24/08/22
+- Added cache timer feedback, placeholder image, and worked on researching some cloud computing options like AWS Lambda
+
+### 24/08/21
+- Refactored GetWeatherLocation to use cache first, instead of second.  Could likely cleanup all the logic at this point.
+- More work with the weather api and weather widget.
+  - Added a primitive weather hover/tool-tip.  But this really needs looking at, how best to implement it, how to play nice with the nav, etc.
 
 ### 24/08/20
 - Wired up the NWS API and Data caching.  Now we have to make it pretty, create or find icons, format it, etc.
