@@ -1,4 +1,8 @@
+
 "use strict";
+
+let shortCacheTime = 60000  * 15;       // 15 minutes so we can catch weather alerts
+let longCacheTime = 60000 * 60 * 24;    // 24 hours
 
 console.log("loading getWeatherAsync.js");
 
@@ -46,7 +50,7 @@ async function getWeatherAsync(lat, lon, callBack) {
     };
     localStorage.setItem("weather", JSON.stringify(cached));
   }
-  console.log("[getWeatherAsync] Cached Weather Data");
+  console.log(`[getWeatherAsync] Cached Weather Data [${ElapsedTime(cached.forecastTimeStamp+shortCacheTime)}]`);
   console.log(cached);
 
   // Deal with Cache-ing of Weather Data
@@ -74,9 +78,9 @@ async function getWeatherAsync(lat, lon, callBack) {
   let weatherForecastUrl = "";
   if (
     cached.forecastUrl !== null &&
-    cached.forecastUrlTimeStamp > Date.now() - 3600000 * 24
+    cached.forecastUrlTimeStamp > Date.now() - longCacheTime
   ) {
-    console.log(`[getWeatherAsync] Using Cached Weather Url`);
+    console.log(`[getWeatherAsync] Using Cached Weather Url [${ElapsedTime(cached.forecastUrlTimeStamp+longCacheTime)}]`);
     weatherForecastUrl = cached.forecastUrl;
   } else {
     console.log("[getWeatherAsync] Fetching New Weather Url");
@@ -110,9 +114,9 @@ async function getWeatherAsync(lat, lon, callBack) {
   // https://api.weather.gov/stations/KI35/observations
   if (
     cached?.observationStationsUrl !== null &&
-    cached?.observationStationTimeStamp > Date.now() - 3600000 * 24
+    cached?.observationStationTimeStamp > Date.now() - longCacheTime
   ) {
-    console.log("[getWeatherAsync] Using Cached Observation Station");
+    console.log(`[getWeatherAsync] Using Cached Observation Station [${ElapsedTime(cached.observationStationTimeStamp+longCacheTime)}]`);
   } else {
     console.log("[getWeatherAsync] Fetching new Observation Station");
     await fetch(cached.observationStationsUrl)
@@ -141,8 +145,8 @@ async function getWeatherAsync(lat, lon, callBack) {
   // Get Current Observation
   if (cached?.observationStationID === "") {
     console.log("[getWeatherAsync] No Observation Station ID available");
-  } else if (cached?.observationTimeStamp > Date.now() - 3600000 * 1) {
-    console.log("[getWeatherAsync] Using Cached Observation Data");
+  } else if (cached?.observationTimeStamp > Date.now() - shortCacheTime) {
+    console.log(`[getWeatherAsync] Using Cached Observation Data [${ElapsedTime(cached.observationTimeStamp+shortCacheTime)}]`);
     /* ... */
   } else {
     console.log("[getWeatherAsync] Fetching New Observation Data");
@@ -184,8 +188,8 @@ async function getWeatherAsync(lat, lon, callBack) {
 
   // Get the forecast
   // https://api.weather.gov/gridpoints/JKL/65,16/forecast
-  if (cached?.forecastTimeStamp > Date.now() - 3600000 * 1) {
-    console.log("[getWeatherAsync] Using Cached Weather Data");
+  if (cached?.forecastTimeStamp > Date.now() - shortCacheTime) {
+    console.log(`[getWeatherAsync] Using Cached Weather Data [${ElapsedTime(cached.forecastTimeStamp+shortCacheTime)}]`);
   } else if (weatherForecastUrl !== "") {
     console.log("[getWeatherAsync] Fetching New weather Data");
     await fetch(weatherForecastUrl)

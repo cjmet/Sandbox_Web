@@ -1,4 +1,7 @@
+
 "use strict";
+
+let cacheTime = 60000 * 5; // 5? minutes just in case we are in a car and chasing a tornado?
 
 console.log("loading getLocationAsync.js");
 
@@ -11,9 +14,9 @@ async function getWeatherLocationAsync(callBack) {
   cached = JSON.parse(localStorage.getItem("location"));
   console.log(`[getLocationAsync] Checking Location Data`);
 
-  if (cached.lat != null && cached.lon != null && cached.timestamp != null && cached.timestamp > Date.now() - 60000) {
+  if (cached.lat != null && cached.lon != null && cached.timestamp != null && cached.timestamp > Date.now() - cacheTime) {
     console.log(
-      `[getLocationAsync] Using cached location: ${cached.lat}, ${cached.lon}, ${cached.timestamp}, ${Math.round(60 - (Date.now() - cached.timestamp) / 1000)}s remaining`
+      `[getLocationAsync] Using cached location: ${cached.lat}, ${cached.lon}, ${cached.timestamp}, [${ElapsedTime(cached.timestamp + cacheTime)}]`
     );
     getWeatherAsync(cached.lat, cached.lon, callBack);
   } else if (navigator.geolocation) {

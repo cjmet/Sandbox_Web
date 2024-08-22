@@ -19,7 +19,7 @@ document.getElementById("WeatherButton").addEventListener("click", function () {
   // Weather Button Clicked
   getWeatherLocationAsync(function (weather) {
     console.log("[Weather Button] Weather Data");
-    console.log(weather);
+    // console.log(weather);
     document.getElementById("WeatherDiv").style.display = "none";
     document.getElementById("WeatherObservationsDiv").innerHTML =
       "Observation Station: <br>" +
@@ -53,7 +53,7 @@ document.getElementById("WeatherButton").addEventListener("click", function () {
 // Weather Widget
 getWeatherLocationAsync(function (weather) {
   console.log("[Weather Widget] Weather Data");
-  console.log(weather);
+  // console.log(weather);
 
   // Short Forecast
   document.getElementById("WeatherForecast").innerHTML =
@@ -78,7 +78,7 @@ getWeatherLocationAsync(function (weather) {
     '<div id="weatherspacer"><br></div>' +
     weather.detailedForecast ;
     // + "<br>" + weather.forecastStartTime;
-  // document.getElementById("WeatherWidget").setAttribute("tooltip", forecast);
+  document.getElementById("WeatherWidget").setAttribute("tooltip", forecast); // cjm 
   document.getElementById("WeatherToolTip").innerHTML = forecast;
 });
 
