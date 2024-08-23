@@ -1,4 +1,5 @@
 "use strict";
+let debug = true;
 
 // tldr: Pick 6m for alerts or 1 hour for forecasts.
 //
@@ -35,11 +36,11 @@ async function getWeatherAsync(lat, lon, callBack) {
     console.log("[getWeatherAsync] No Cached Weather Data");
     cached = {
       forecastUrl: "",
-      forecastUrlTimeStamp: 0,
+      forecastUrlTimeStamp: "",
       shortForecast: "",
-      temperature: -999,
+      temperature: "",
       temperatureUnit: "",
-      probabilityOfPrecipitation: -9,
+      probabilityOfPrecipitation: "",
       detailedForecast: "",
       forecastStartTime: "",
       forecastTimeStamp: "",
@@ -47,21 +48,22 @@ async function getWeatherAsync(lat, lon, callBack) {
 
       observationStationID: "",
       observationStationName: "",
-      observationStationTimeStamp: 0,
+      observationStationTimeStamp: "",
 
-      observationTimeStamp: 0,
+      observationTimeStamp: "",
       observationShortText: "",
-      observationTemperature: -999,
+      observationTemperature: "",
       observationTemperatureUnit: "",
     };
-    localStorage.setItem("weather", JSON.stringify(cached));
+    // localStorage.setItem("weather", JSON.stringify(cached));
+  } else {
+    console.log(
+      `[getWeatherAsync] Cached Weather Data [${ElapsedTime(
+        cached.forecastTimeStamp + shortCacheTime
+      )}]`
+    );
+    console.log(cached);
   }
-  console.log(
-    `[getWeatherAsync] Cached Weather Data [${ElapsedTime(
-      cached.forecastTimeStamp + shortCacheTime
-    )}]`
-  );
-  console.log(cached);
 
   // Deal with Cache-ing of Weather Data
   /* 
@@ -105,6 +107,15 @@ async function getWeatherAsync(lat, lon, callBack) {
       })
       .then((data) => {
         console.log(data);
+
+        // cjm - this is not the best way to handle this, but it works for now
+        if (data?.properties === null || data?.properties === undefined) {
+          console.log(
+            "[getWeatherAsync] *** ABORT ***: Fetch Failed: No Data Available"
+          );
+          return;
+        }
+
         console.log(
           `[stationLocation] cwa: ${data.properties.cwa} GridID: ${data.properties.gridId}, GridX: ${data.properties.gridX}, GridY: ${data.properties.gridY} `
         );
@@ -135,7 +146,7 @@ async function getWeatherAsync(lat, lon, callBack) {
         cached.observationStationTimeStamp + longCacheTime
       )}]`
     );
-  } else {
+  } else if (cached?.observationStationsUrl !== "") {
     console.log("[getWeatherAsync] Fetching new Observation Station");
     await fetch(cached.observationStationsUrl)
       .then((response) => {
@@ -143,6 +154,15 @@ async function getWeatherAsync(lat, lon, callBack) {
       })
       .then((data) => {
         console.log(data);
+
+        // cjm - this is not the best way to handle this, but it works for now
+        if (data?.features === null || data?.features === undefined) {
+          console.log(
+            "[getWeatherAsync] *** ABORT ***: Fetch Failed: No Data Available"
+          );
+          return;
+        }
+
         console.log(
           `[ObservationStations] Station ID: ${data.features[0].properties.stationIdentifier}`
         );
@@ -179,6 +199,15 @@ async function getWeatherAsync(lat, lon, callBack) {
       })
       .then((data) => {
         console.log(data);
+
+        // cjm - this is not the best way to handle this, but it works for now
+        if (data?.features === null || data?.features === undefined) {
+          console.log(
+            "[getWeatherAsync] *** ABORT ***: Fetch Failed: No Data Available"
+          );
+          return;
+        }
+
         cached.observationTimeStamp = Date.now();
         cached.observationShortText = String(
           data.features[0].properties.textDescription
@@ -219,6 +248,18 @@ async function getWeatherAsync(lat, lon, callBack) {
       })
       .then((data) => {
         console.log(data);
+
+        // cjm - this is not the best way to handle this, but it works for now
+        if (
+          data?.properties?.periods === null ||
+          data?.properties?.periods === undefined
+        ) {
+          console.log(
+            "[getWeatherAsync] *** ABORT ***: Fetch Failed: No Data Available"
+          );
+          return;
+        }
+
         cached.shortForecast = String(data.properties.periods[0].shortForecast);
 
         // Temperature, read it first, then convert it to Fahrenheit
