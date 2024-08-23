@@ -1,6 +1,13 @@
 "use strict";
 
-let shortCacheTime = 60000 * 15; // 15 minutes so we can catch weather alerts
+// tldr: Pick 6m for alerts or 1 hour for forecasts.
+//
+// Cache for 6 minutes so we can setinterval for 7 minutes which is
+// about half of the 15 minutes interval the weather service updates
+// it's possible we would want to set this as low as 4 or 5 minutes to
+// catch weather alerts, or as high as 4 hours which is the forecast interval.
+
+let shortCacheTime = 60000 * 6; // 7 (-1) minutes so we can catch weather alerts
 let longCacheTime = 60000 * 60 * 24; // 24 hours
 
 console.log("loading getWeatherAsync.js");

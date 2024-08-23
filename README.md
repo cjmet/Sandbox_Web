@@ -12,18 +12,18 @@ Just a place to play with web code while learning. <br>
   - [ ] Scan historical shortForecasts for keyword parsing to create icons
 - [ ] Shrink the Header on Scroll, then sticky it
 
-  ## Questions
+## Questions
 
-  - [ ] Is there a way to move getlocation into getforecast? instead of location being required to call forcast?
-  - [ ] async await vs callback?
-  - [ ] can you await function(callback)?
-  - [ ] how to mix await functionAsync and functionCallBack patterns?
-  - [ ] Group Functions Together? Bundle Them?
-  - [ ] Is there a way to use HTML in #element::before { content: "text" }
-  - [ ] How do I add accessibility to a weather widget with a tooltip popup for the forecast?
-  - [ ] Help with fetch caching and syntax
-  - [ ] Is there a way to lockout an async function so that it isn't called twice at the same time from different sources?
-  - [ ] I'm probably using to many divs. How can I Improve this?
+- [ ] Is there a way to move getlocation into getforecast? instead of location being required to call forcast?
+- [ ] async await vs callback?
+- [ ] can you await function(callback)?
+- [ ] how to mix await functionAsync and functionCallBack patterns?
+- [ ] Group functions and multiple script files together? Bundle Them?
+- [ ] Is there a way to use HTML in #element::before { content: "some content" }
+- [ ] How do I add accessibility to a weather widget with a tooltip popup for the forecast?
+- [ ] Help with fetch caching and syntax
+- [ ] Is there a way to lockout an async function so that it isn't called twice at the same time from different sources? The Weather task is linked to the widget in the header and an on-demand button. If both were called simultaneously bad things would probably result.
+- [ ] I'm probably using to many divs. How can I Improve this?
 
 ## Notes
 

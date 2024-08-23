@@ -51,36 +51,45 @@ document.getElementById("WeatherButton").addEventListener("click", function () {
 // /Weather Button
 
 // Weather Widget
-getWeatherLocationAsync(function (weather) {
-  console.log("[Weather Widget] Weather Data");
-  // console.log(weather);
+function WeatherWidget() {
+  getWeatherLocationAsync(function (weather) {
+    console.log("[Weather Widget] Weather Data");
+    // console.log(weather);
 
-  // Short Forecast
-  document.getElementById("WeatherForecast").innerHTML =
-    weather.observationShortText +
-    " " +
-    weather.observationTemperature +
-    weather.observationTemperatureUnit;
+    // Short Forecast
+    document.getElementById("WeatherForecast").innerHTML =
+      weather.observationShortText +
+      " " +
+      weather.observationTemperature +
+      weather.observationTemperatureUnit;
 
-  // Weather Image
+    // Weather Image
 
-  // *** Add Code Here  *** //
+    // *** Add Code Here  *** //
 
-  // Long Forecast
-  let forecast =
-    "Forecast: <br>" +
-    weather.shortForecast +
-    " " +
-    weather.temperature +
-    weather.temperatureUnit +
-    "<br>" +
-    weather.probabilityOfPrecipitation +
-    "% precipitation<br>" +
-    '<div id="weatherspacer"><br></div>' +
-    weather.detailedForecast;
-  // + "<br>" + weather.forecastStartTime;
-  document.getElementById("WeatherWidget").setAttribute("tooltip", forecast); // cjm
-  document.getElementById("WeatherToolTip").innerHTML = forecast;
-});
+    // Long Forecast
+    let forecast =
+      "Forecast: <br>" +
+      weather.shortForecast +
+      " " +
+      weather.temperature +
+      weather.temperatureUnit +
+      "<br>" +
+      weather.probabilityOfPrecipitation +
+      "% precipitation<br>" +
+      '<div id="weatherspacer"><br></div>' +
+      weather.detailedForecast;
+    // + "<br>" + weather.forecastStartTime;
+    document.getElementById("WeatherWidget").setAttribute("tooltip", forecast); // cjm
+    document.getElementById("WeatherToolTip").innerHTML = forecast;
+  });
+}
 
+console.log(
+  `[Weather Widget] Refresh Interval: ${ElapsedTime(
+    Date.now() - shortCacheTime
+  )}`
+);
+WeatherWidget();
+setInterval(WeatherWidget, shortCacheTime);
 // /Weather Widget
