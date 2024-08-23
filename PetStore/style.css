@@ -20,7 +20,7 @@ body {
 #Animation,
 #AnimationPath,
 #AnimationFrame {
-  display: none; 
+  display: none;
 }
 
 .DocumentHeader {
@@ -56,7 +56,7 @@ body {
 #WeatherWidget {
   /* border: red 1px solid; */
   flex: 0 1 auto;
-  width: 9rem;
+  width: 9.5rem;
   height: 4.5rem;
   display: flex;
 }
@@ -65,8 +65,9 @@ body {
   /* border: green 1px solid; */
   text-align: center;
   align-content: center;
-  width: 4.5rem;
+  width: 5rem;
   height: 4.5rem;
+  margin-right: 0.5rem;
 }
 
 #WeatherImage {
@@ -103,17 +104,31 @@ body {
   right: 0;
   padding: 0.5em;
   border-radius: 0.5em;
-  width: 15em;
+
+  transition: all 0.33s;
+  translate: 100% -100%;
+  width: 15rem;
+  height: auto;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, 0.75);
+  border: black 3px solid;
   opacity: 0;
 }
 
 #WeatherWidget:hover {
-  background-color: black;
-  color: black;
+  #WeatherForecast,
+  #WeatherImage {
+    transition: all 0.33s;
+    opacity: 0.5;
+  }
   #WeatherToolTip {
     color: white;
+    transition: all 0.33s;
+    translate: 0% 0%;
+    width: 15rem;
+    height: auto;
     opacity: 1;
+    /* overflow: visible; */
   }
 }
 
@@ -181,7 +196,6 @@ main {
   border: 3px solid black;
   border-width: 1px 3px;
   /* border: 3px solid lightcoral; */
-  
 
   flex-grow: 1;
   background-color: lightgray;

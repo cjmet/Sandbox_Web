@@ -68,6 +68,7 @@ getWeatherLocationAsync(function (weather) {
 
   // Long Forecast
   let forecast =
+    "Forecast: <br>" +
     weather.shortForecast +
     " " +
     weather.temperature +
@@ -76,9 +77,9 @@ getWeatherLocationAsync(function (weather) {
     weather.probabilityOfPrecipitation +
     "% precipitation<br>" +
     '<div id="weatherspacer"><br></div>' +
-    weather.detailedForecast ;
-    // + "<br>" + weather.forecastStartTime;
-  document.getElementById("WeatherWidget").setAttribute("tooltip", forecast); // cjm 
+    weather.detailedForecast;
+  // + "<br>" + weather.forecastStartTime;
+  document.getElementById("WeatherWidget").setAttribute("tooltip", forecast); // cjm
   document.getElementById("WeatherToolTip").innerHTML = forecast;
 });
 

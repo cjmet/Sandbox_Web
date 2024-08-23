@@ -1,8 +1,7 @@
-
 "use strict";
 
-let shortCacheTime = 60000  * 15;       // 15 minutes so we can catch weather alerts
-let longCacheTime = 60000 * 60 * 24;    // 24 hours
+let shortCacheTime = 60000 * 15; // 15 minutes so we can catch weather alerts
+let longCacheTime = 60000 * 60 * 24; // 24 hours
 
 console.log("loading getWeatherAsync.js");
 
@@ -50,7 +49,11 @@ async function getWeatherAsync(lat, lon, callBack) {
     };
     localStorage.setItem("weather", JSON.stringify(cached));
   }
-  console.log(`[getWeatherAsync] Cached Weather Data [${ElapsedTime(cached.forecastTimeStamp+shortCacheTime)}]`);
+  console.log(
+    `[getWeatherAsync] Cached Weather Data [${ElapsedTime(
+      cached.forecastTimeStamp + shortCacheTime
+    )}]`
+  );
   console.log(cached);
 
   // Deal with Cache-ing of Weather Data
@@ -80,7 +83,11 @@ async function getWeatherAsync(lat, lon, callBack) {
     cached.forecastUrl !== null &&
     cached.forecastUrlTimeStamp > Date.now() - longCacheTime
   ) {
-    console.log(`[getWeatherAsync] Using Cached Weather Url [${ElapsedTime(cached.forecastUrlTimeStamp+longCacheTime)}]`);
+    console.log(
+      `[getWeatherAsync] Using Cached Weather Url [${ElapsedTime(
+        cached.forecastUrlTimeStamp + longCacheTime
+      )}]`
+    );
     weatherForecastUrl = cached.forecastUrl;
   } else {
     console.log("[getWeatherAsync] Fetching New Weather Url");
@@ -116,7 +123,11 @@ async function getWeatherAsync(lat, lon, callBack) {
     cached?.observationStationsUrl !== null &&
     cached?.observationStationTimeStamp > Date.now() - longCacheTime
   ) {
-    console.log(`[getWeatherAsync] Using Cached Observation Station [${ElapsedTime(cached.observationStationTimeStamp+longCacheTime)}]`);
+    console.log(
+      `[getWeatherAsync] Using Cached Observation Station [${ElapsedTime(
+        cached.observationStationTimeStamp + longCacheTime
+      )}]`
+    );
   } else {
     console.log("[getWeatherAsync] Fetching new Observation Station");
     await fetch(cached.observationStationsUrl)
@@ -146,7 +157,11 @@ async function getWeatherAsync(lat, lon, callBack) {
   if (cached?.observationStationID === "") {
     console.log("[getWeatherAsync] No Observation Station ID available");
   } else if (cached?.observationTimeStamp > Date.now() - shortCacheTime) {
-    console.log(`[getWeatherAsync] Using Cached Observation Data [${ElapsedTime(cached.observationTimeStamp+shortCacheTime)}]`);
+    console.log(
+      `[getWeatherAsync] Using Cached Observation Data [${ElapsedTime(
+        cached.observationTimeStamp + shortCacheTime
+      )}]`
+    );
     /* ... */
   } else {
     console.log("[getWeatherAsync] Fetching New Observation Data");
@@ -157,31 +172,26 @@ async function getWeatherAsync(lat, lon, callBack) {
       })
       .then((data) => {
         console.log(data);
-        console.log(
-          `[Observation] Timestamp: ${data.features[0].properties.timestamp}`
-        );
-        console.log(
-          `[Observation] Weather: ${data.features[0].properties.textDescription}`
-        );
-        console.log(
-          `[Observation] Temperature: ${data.features[0].properties.temperature.value}`
-        );
-        console.log(
-          `[Observation] Temperature Unit: ${data.features[0].properties.temperature.unitCode.replace(
-            /wmoUnit\:deg/i,
-            ""
-          )}`
-        );
         cached.observationTimeStamp = Date.now();
         cached.observationShortText = String(
           data.features[0].properties.textDescription
         );
-        cached.observationTemperature = String(
-          data.features[0].properties.temperature.value
-        );
-        cached.observationTemperatureUnit = String(
-          data.features[0].properties.temperature.unitCode
-        ).replace(/wmoUnit\:deg/i, "");
+
+        // Temperature, read it first, then convert it to Fahrenheit
+        {
+          cached.observationTemperature = String(
+            data.features[0].properties.temperature.value
+          );
+          cached.observationTemperatureUnit = String(
+            data.features[0].properties.temperature.unitCode
+          ).replace(/wmoUnit\:deg/i, "");
+          cached.observationTemperature = WeatherTemperatureFahrenheit(
+            cached.observationTemperature,
+            cached.observationTemperatureUnit
+          );
+          cached.observationTemperatureUnit = "°f";
+        }
+
         localStorage.setItem("weather", JSON.stringify(cached));
       });
   }
@@ -189,7 +199,11 @@ async function getWeatherAsync(lat, lon, callBack) {
   // Get the forecast
   // https://api.weather.gov/gridpoints/JKL/65,16/forecast
   if (cached?.forecastTimeStamp > Date.now() - shortCacheTime) {
-    console.log(`[getWeatherAsync] Using Cached Weather Data [${ElapsedTime(cached.forecastTimeStamp+shortCacheTime)}]`);
+    console.log(
+      `[getWeatherAsync] Using Cached Weather Data [${ElapsedTime(
+        cached.forecastTimeStamp + shortCacheTime
+      )}]`
+    );
   } else if (weatherForecastUrl !== "") {
     console.log("[getWeatherAsync] Fetching New weather Data");
     await fetch(weatherForecastUrl)
@@ -199,10 +213,20 @@ async function getWeatherAsync(lat, lon, callBack) {
       .then((data) => {
         console.log(data);
         cached.shortForecast = String(data.properties.periods[0].shortForecast);
-        cached.temperature = String(data.properties.periods[0].temperature);
-        cached.temperatureUnit = String(
-          data.properties.periods[0].temperatureUnit
-        );
+
+        // Temperature, read it first, then convert it to Fahrenheit
+        {
+          cached.temperature = String(data.properties.periods[0].temperature);
+          cached.temperatureUnit = String(
+            data.properties.periods[0].temperatureUnit
+          );
+          cached.temperature = WeatherTemperatureFahrenheit(
+            cached.temperature,
+            cached.temperatureUnit
+          );
+          cached.temperatureUnit = "°f";
+        }
+
         let rain = data.properties.periods[0].probabilityOfPrecipitation.value;
         if (rain === null || rain === undefined || rain === "") {
           rain = 0;
@@ -211,9 +235,7 @@ async function getWeatherAsync(lat, lon, callBack) {
         cached.detailedForecast = String(
           data.properties.periods[0].detailedForecast
         );
-        cached.forecastStartTime = String(
-          data.properties.periods[0].startTime
-        );
+        cached.forecastStartTime = String(data.properties.periods[0].startTime);
         cached.forecastTimeStamp = Date.now();
         localStorage.setItem("weather", JSON.stringify(cached));
       });
@@ -224,4 +246,22 @@ async function getWeatherAsync(lat, lon, callBack) {
   // Call the callback function
   callBack(cached);
   console.log("[getWeatherAsync] Done.");
+}
+
+function WeatherTemperatureFahrenheit(temperature, temperatureUnit) {
+  // ((fahrenheit - 32) * 5 / 9) °F to °C;
+  // celcius to fahrenheit: (celsius * 9 / 5) + 32
+  let fahrenheit = -999;
+  if (
+    temperatureUnit == "F" ||
+    temperatureUnit == "f" ||
+    temperatureUnit == "°F" ||
+    temperatureUnit == "°f"
+  )
+    fahrenheit = Math.round(temperature);
+  else fahrenheit = Math.round((temperature * 9) / 5 + 32);
+  console.log(
+    `[WeatherTemperatureFahrenheit] ${temperature} ${temperatureUnit} = ${fahrenheit} °F`
+  );
+  return fahrenheit;
 }

@@ -5,71 +5,77 @@ Just a place to play with web code while learning. <br>
 <br>
 
 ## To-Do
+
 - [ ] Weather API
   - [ ] Make it pretty
   - [ ] Implement Weather Image
-
-  <br>
-  - [ ] Is there a way to move getlocation into getforecast? instead of location calling forcast?
-  - [ ] Group Functions Together?  Bundle Them?
   - [ ] Scan historical shortForecasts for keyword parsing to create icons
-  
-<!-- Older Things To Do -->
 - [ ] Shrink the Header on Scroll, then sticky it
 
-## Questions
-- I'm probably using to many \<div>s.  How can I Improve this?
-- Is there a way to move getlocation into getforecast? instead of location calling forcast?
-- Weather Tooltip overlaps nav?
-  - alternate ways to do this.  The other alternate didn't render html
-  - another another way to do this?
-  - some completely different design
-  - how the heck do you add accessiblity to this?  Or how do you redesign it for accessibility
-  - fetch caching ... I have a couple of options but I'm not sure on how to proceed with actually testing them and knowing if the test suceeded.
-- Is there a way to lockout the async get weather function so you can't call it twice at once?  A static flag maybe? How does java handle this kind of thing?
-- ...
+  ## Questions
+
+  - [ ] Is there a way to move getlocation into getforecast? instead of location being required to call forcast?
+  - [ ] async await vs callback?
+  - [ ] can you await function(callback)?
+  - [ ] how to mix await functionAsync and functionCallBack patterns?
+  - [ ] Group Functions Together? Bundle Them?
+  - [ ] Is there a way to use HTML in #element::before { content: "text" }
+  - [ ] How do I add accessibility to a weather widget with a tooltip popup for the forecast?
+  - [ ] Help with fetch caching and syntax
+  - [ ] Is there a way to lockout an async function so that it isn't called twice at the same time from different sources?
+  - [ ] I'm probably using to many divs. How can I Improve this?
 
 ## Notes
-- Container-Type: interacts with grid and flex sizes and alignments.  How do I correct or adjust for this?
+
+- Container-Type: interacts with grid and flex sizes and alignments. How do I correct or adjust for this?
 - Is it possible to combine multiple different containers into a query?
-- Is there a way to re-write the container query to apply the display-type? changes to self or sibling? I would rather read self-width instead of parent-width-adjusted-for-margins. 
+- Is there a way to re-write the container query to apply the display-type? changes to self or sibling? I would rather read self-width instead of parent-width-adjusted-for-margins.
 - Alternatively Use an Invisible \<div> parent? But you would still need to adjust for the interactions issue noted above.
 
 ## Blog
 
 ### 24/08/22
+
 - Added cache timer feedback, placeholder image, and worked on researching some cloud computing options like AWS Lambda
 
 ### 24/08/21
-- Refactored GetWeatherLocation to use cache first, instead of second.  Could likely cleanup all the logic at this point.
+
+- Refactored GetWeatherLocation to use cache first, instead of second. Could likely cleanup all the logic at this point.
 - More work with the weather api and weather widget.
-  - Added a primitive weather hover/tool-tip.  But this really needs looking at, how best to implement it, how to play nice with the nav, etc.
+  - Added a primitive weather hover/tool-tip. But this really needs looking at, how best to implement it, how to play nice with the nav, etc.
 
 ### 24/08/20
-- Wired up the NWS API and Data caching.  Now we have to make it pretty, create or find icons, format it, etc.
+
+- Wired up the NWS API and Data caching. Now we have to make it pretty, create or find icons, format it, etc.
 
 ### 24/08/19
-- Experimented more with the NWS API.  Integraged Geolocation and Forecast. Started Adding Local Storage and Caching.
+
+- Experimented more with the NWS API. Integraged Geolocation and Forecast. Started Adding Local Storage and Caching.
 
 ### 24/08/17
-- Experimented with the OpenWeather API. It's easier for current weather, but isn't going to supply the forecast and information I really want as well as the NWS API.  I might go ahead and use it for current weather, just for convenience, might not.
+
+- Experimented with the OpenWeather API. It's easier for current weather, but isn't going to supply the forecast and information I really want as well as the NWS API. I might go ahead and use it for current weather, just for convenience, might not.
 
 ### 24/08/16
+
 - Playing with the NOAA NWS Weather API
   - I can definitely see why people opt for the paid APIs.
 
 ### 24/08/15
-- More Playing with Animations and Sprites.  
+
+- More Playing with Animations and Sprites.
 - Modular Double-Div Animations, that could in the future be controlled by JavaScript.
   - It's more difficult to repeat modular or grouped animations in pure CSS as there is neither grouping nor delay-after options.
     - You can add a delay after using keyframes, but then the animations become non-modular, and I was purposefully looking at modular design.
 
 ### 24/08/14
+
 - Playing with Animations
 
 ### 24/08/13
+
 - We finally have the averaging function I wanted.
-- container-type: interacts with grid and flex sizes and alignments. 
+- container-type: interacts with grid and flex sizes and alignments.
 - Added a lot of notes about Math, Container Queries, Container Math, etc.
 
   ```
@@ -109,6 +115,7 @@ Just a place to play with web code while learning. <br>
   ```
 
 ### 24/08/08
+
 - We have **Container Queries**!
 - Container Query by Name and Type.
 - Protozoan Math and Type Casting in CSS
@@ -122,6 +129,7 @@ Just a place to play with web code while learning. <br>
 - Image alignment wonkiness best practices? I used margins and EMs and eyeballs.
 
 ### 24/07/20
+
 - Notes
 
   ```
