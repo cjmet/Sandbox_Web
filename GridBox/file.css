@@ -1,0 +1,418 @@
+/* this is what makes it fill the viewport */
+/* this was ommitted from the discussion, demos, and sample files */
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: min-content 1fr auto;
+  grid-template-areas:
+    "header header"
+    "nav main"
+    "footer footer";
+}
+
+/* cjm */
+#Animation,
+#AnimationPath,
+#AnimationFrame {
+  display: none;
+}
+
+.DocumentHeader {
+  /* border: 3px solid orange; */
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  color: white;
+  padding: 0.5em;
+  text-align: left;
+  overflow: hidden;
+  z-index: 1000;
+
+  display: flex;
+}
+
+#HeaderNav {
+  /* border: green 1px solid; */
+  flex: 1 0 auto;
+}
+
+#Logo {
+  float: left;
+  margin: 0;
+}
+
+#PageTitle {
+  margin: 0.5em;
+}
+
+/* height: 4.5rem / 72px; */
+#WeatherWidget {
+  /* border: red 1px solid; */
+  flex: 0 1 auto;
+  width: 9.5rem;
+  height: 4.5rem;
+  display: flex;
+}
+
+#WeatherForecast {
+  /* border: green 1px solid; */
+  text-align: center;
+  align-content: center;
+  width: 5rem;
+  height: 4.5rem;
+  margin-right: 0.5rem;
+}
+
+#WeatherImage {
+  /* border: blue 1px solid; */
+  text-align: center;
+  align-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+/* cjm */
+[tooltip]::before {
+  display: none;
+
+  position: absolute;
+  content: attr(tooltip);
+  opacity: 0;
+  z-index: 2000;
+}
+
+[tooltip]:hover::before {
+  opacity: 1;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#WeatherToolTip {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 0.5em;
+  border-radius: 0.5em;
+
+  transition: all 0.33s;
+  translate: 100% -100%;
+  width: 15rem;
+  height: auto;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.75);
+  border: black 3px solid;
+  opacity: 0;
+}
+
+#WeatherWidget:hover {
+  #WeatherForecast,
+  #WeatherImage {
+    transition: all 0.33s;
+    opacity: 0.5;
+  }
+  #WeatherToolTip {
+    color: white;
+    transition: all 0.33s;
+    translate: 0% 0%;
+    width: 15rem;
+    height: auto;
+    opacity: 1;
+    /* overflow: visible; */
+  }
+}
+
+#weatherspacer {
+  font-size: 0.33em;
+}
+
+.DocumentHeader a {
+  color: white;
+  margin-left: 1em;
+  text-decoration: none;
+}
+
+.MainNavLeft {
+  /* border: 3px solid blue; */
+  grid-area: nav;
+  background-color: #666;
+  color: white;
+  padding: 0.5em;
+  margin: 0;
+  text-align: left;
+  text-wrap: nowrap;
+  /* overflow: hidden;  */
+}
+
+.MainNavLeft > h1,
+.MainNavLeft > h2,
+.MainNavLeft > h3,
+.MainNavLeft > h4,
+.MainNavLeft > h5,
+.MainNavLeft > h6 {
+  margin: 0.5em 0.1em;
+}
+
+.MainNavLeft a {
+  display: block;
+  color: white;
+  padding: 0 0.5em 0.25em 1em;
+  text-decoration: none;
+}
+
+/* ========================================================================
+   Main */
+
+main {
+  /* border: 5px solid green; */
+  /* background-color: #c0ebc0; */
+
+  grid-area: "main";
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.MainDataTitle {
+  border: 3px solid black;
+
+  background-color: wheat;
+  text-align: center;
+}
+
+.MainDataArticles {
+  border: 3px solid black;
+  border-width: 1px 3px;
+  /* border: 3px solid lightcoral; */
+
+  flex-grow: 1;
+  background-color: lightgray;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  /* OPTION: Flexbox option.  This option is working how I intended. */
+  /* display: flex;
+  flex-flow: row wrap; */
+
+  /* overflow: auto; */
+}
+
+article {
+  flex-grow: 1; /* for the flexbox option */
+  border: 1px solid black;
+  background-color: lightskyblue;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+/* /Main 
+=========================================================================== */
+
+/* ========================================================================
+  Mathemanai 
+    * You can do container math without the container query, but it targets
+         the parent, aka container of the current element.
+    * Chrome is less durable than Firefox for CSS Math Failures
+    * ANY error in the final compiled forumla will cause the entire 
+        formula to fail, including all 'previous' steps.
+    * Can NOT mix units in the same formula.
+    * Can Convert to numeric with tan(atan2(X Units, 1 Unit));
+    * can NOT divide Units by Units, only numbers.  
+        100px / 2px = fail? 100px / 2 = 50px
+    * variables are WORM Cascade, Write Once Read Many and Cascade, and
+        variables can not reference themselves, and they are redefined by 
+        by the last definition found in the file. Variables are not
+        really WORM. More accurately it's probably: 
+          Read the File, Define the Variables, Assign the Variables, 
+          Read the file again and execute the definitions.
+    * WORM
+      --pixie: 1500;
+      --pixies: calc(var(--pixie) / 3);
+      --pixie: 1000;
+      var(--pixies) now equals 333;
+    * counter may be limited in precision
+    
+  Container Queries 
+    * container-type: interacts with grid and flex sizes and alignments 
+    * parent container query CAN control display: for children
+    * container can NOT control display: for self
+    * sibling can NO control display: for siblings
+    * cqw: width - borders and padding and adjusted for dpi
+    * vw: viewport width
+
+*/
+
+/* Force Pixels */
+@property --100vw {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
+@property --cqw {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
+/* Force Integer */
+@property --ToInt {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+/* MIB - Sibling :container: */
+null #MIB {
+  container: MIB / inline-size;
+  /* margin: 5px; */
+  /* border: 3px solid blue; */
+}
+
+@container MIB (min-width: 0px) {
+  #MIB::before {
+    --100vw: 100vw;
+    --cqw: 100cqw;
+
+    /* prettier-ignore */
+    counter-reset: CA tan(atan2(var(--100vw), 1px)) CB tan(atan2(var(--cqw), 1px));
+    content: "MIB::   viewport: " counter(CA) " container: " counter(CB);
+  }
+  #MDR {
+    display: grid;
+    grid-template-columns: 125px;
+  }
+}
+
+/* MDR - Self :container: */
+null .MDR {
+  container: MDR / inline-size;
+}
+
+@container MDR (min-width: 0px) {
+  #MDR {
+    display: grid;
+    grid-template-columns: 125px;
+  }
+  #MDR::before {
+    --100vw: 100vw;
+    --cqw: 100cqw;
+
+    /* prettier-ignore */
+    counter-reset: CA tan(atan2(var(--100vw), 1px)) CB tan(atan2(var(--cqw), 1px));
+    content: "MDR::   viewport: " counter(CA) " container: " counter(CB);
+  }
+}
+
+/* Main - Parent :container: */
+main {
+  container: ContainerMain / inline-size;
+}
+
+@container ContainerMain (min-width: 0px) {
+  main::before,
+  #MDR {
+    --100vw: 100vw;
+    --100vw-num: tan(atan2(var(--100vw), 1px));
+    --cqw: 100cqw;
+    /* adjust for the margins, padding, and borders */
+    --cqw-offset: calc(var(--cqw) - 15px);
+    --cqw-num: tan(atan2(var(--cqw-offset), 1px));
+
+    /* --grid-avg: 330px; */
+    /* absolute min 320 * 2 / 1.5 = 426.6666666666667 */
+    --grid-avg: 427px;
+    --grid-avg-num: tan(atan2(var(--grid-avg), 1px));
+    --ToInt: calc(var(--cqw-num) / var(--grid-avg-num));
+    --grid-min: calc(var(--cqw-offset) / var(--ToInt));
+    --var-min: min(var(--grid-min), var(--grid-avg));
+
+    /* prettier-ignore */
+    counter-reset: 
+      CA tan(atan2(var(--100vw), 1px)) 
+      CB tan(atan2(var(--cqw-num), 1))
+      CC tan(atan2(var(--ToInt), 1))
+      CD tan(atan2(var(--grid-min), 1px)) 
+      CE tan(atan2(var(--var-min), 1px))
+      CF tan(atan2(var(--grid-avg), 1px))
+      ;
+    /* prettier-ignore */
+
+    #ContainerQuery::after {
+      content: 
+      "ContainerMain:: "
+      " Viewport: " counter(CA) 
+      " Container: " counter(CB)
+      " Target: " counter(CF)
+      " ToInt: " counter(CC)
+      " grid-min: " counter(CD)
+      " var-min: " counter(CE)
+      ;
+    }
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--var-min), 1fr));
+  }
+}
+
+#WeatherTarget {
+  display: flex;
+  flex-direction: column;
+}
+
+#WeatherDiv {
+  border: black 1px solid;
+  margin: 1px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: end;
+}
+
+/* /Mathemanai 
+=========================================================================== */
+
+/* ========================================================================
+   Container Queries 
+    * container-type: interacts with grid and flex sizes and alignments 
+    * cqw: width - borders and padding and adjusted for dpi
+    * vw: viewport width
+*/
+/* /Container Queries 
+=========================================================================== */
+
+footer {
+  /* border: 3px solid purple; */
+
+  grid-area: footer;
+  background-color: #333;
+  color: white;
+  text-align: right;
+}
+
+footer > p {
+  margin: 0;
+  padding: 0.1em 0.5em;
+  font-size: small;
+}
+
+.HeaderWithDescription {
+  margin-bottom: 0.1em;
+}
+
+.HeaderDescription {
+  margin-top: 0.1em;
+  font-size: small;
+}

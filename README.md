@@ -34,6 +34,10 @@ Just a place to play with web code while learning. <br>
 
 ## Blog
 
+### 24/08/24
+
+- Added GridBox Demo to play with, learn, and debug a GridBox issue.
+
 ### 24/08/22
 
 - Added cache timer feedback, placeholder image, and worked on researching some cloud computing options like AWS Lambda
