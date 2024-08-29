@@ -133,7 +133,7 @@ async function getWeatherLocationAsync(callBack) {
 
       (error) => {
         console.log(`[getLocationAsync] Error: ${error.message}`);
-        if (cached.lat != null && cached.lon != null) {
+        if (cached?.lat != null && cached?.lon != null) {
           console.log(
             `[getLocationAsync] Using cached location: ${cached.lat}, ${cached.lon}, ${cached.timestamp}`
           );
