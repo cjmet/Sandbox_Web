@@ -37,6 +37,7 @@ Just a place to play with web code while learning. <br>
 ### 24/08/29
 
 - Refactoring WeatherKitty to be portable
+- More portability changes ... rems to ems so we can override in the client/parent
 
 ### 24/08/24
 
