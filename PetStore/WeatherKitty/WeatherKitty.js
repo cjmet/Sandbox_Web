@@ -11,7 +11,7 @@ let longCacheTime = 60000 * 60 * 24; // 24 hours
 //
 
 console.log("Weather Kitty Loading");
-setTimeout(WeatherWidget, 3000);
+setTimeout(WeatherWidget, 1); // cjm
 setInterval(WeatherWidget, shortCacheTime);
 // /Weather Kitty Widget
 
@@ -23,17 +23,47 @@ setInterval(WeatherWidget, shortCacheTime);
 
 function WeatherWidget() {
   getWeatherLocationAsync(function (weather) {
-    console.log("[Weather Widget] Weather Data");
+    console.log("[WeatherWidget] Weather Data");
     // console.log(weather);
 
-    // Short Forecast
-    document.getElementById("WeatherKittyForecast").innerHTML =
+    // Obs Text
+    console.log(
+      `[WeatherData] obs: ${weather.observationShortText} ${weather.observationTemperature}${weather.observationTemperatureUnit}`
+    );
+    document.getElementById("WeatherKittyCurrent").innerHTML =
       weather.observationShortText +
       " " +
       weather.observationTemperature +
       weather.observationTemperatureUnit;
 
-    // Weather Image
+    // Obs Image
+
+    // console.log(`[WeatherWidget] Obs Icon: ${weather.observationIconUrl}`);
+    if (weather.observationIconUrl !== null) {
+      document.getElementById(
+        "WeatherKittyCurrent"
+      ).style.backgroundImage = `url(${weather.observationIconUrl})`;
+    }
+
+    // Forecast Text
+    console.log(
+      `[WeatherData] forecast: ${weather.shortForecast} ${weather.temperature}${weather.temperatureUnit}`
+    );
+    document.getElementById("WeatherKittyForecast").innerHTML =
+      findWeatherWords(weather.shortForecast) +
+      "<br>" +
+      weather.probabilityOfPrecipitation +
+      "% " +
+      weather.temperature +
+      weather.temperatureUnit; // cjm
+
+    // Forecact Image
+    // console.log(`[WeatherWidget] Forecast Icon: ${weather.forecastIconUrl}`);
+    if (weather.forecastIconUrl !== null) {
+      document.getElementById(
+        "WeatherKittyForecast"
+      ).style.backgroundImage = `url(${weather.forecastIconUrl})`;
+    }
 
     // *** Add Code Here  *** //
 
@@ -161,20 +191,22 @@ async function getWeatherAsync(lat, lon, callBack) {
       forecastUrl: "",
       forecastUrlTimeStamp: "",
       shortForecast: "",
+      forecastIconUrl: "",
       temperature: "",
       temperatureUnit: "",
       probabilityOfPrecipitation: "",
       detailedForecast: "",
       forecastStartTime: "",
       forecastTimeStamp: "",
-      observationStationsUrl: "",
 
+      observationStationsUrl: "",
       observationStationID: "",
       observationStationName: "",
       observationStationTimeStamp: "",
 
       observationTimeStamp: "",
       observationShortText: "",
+      observationIconUrl: "",
       observationTemperature: "",
       observationTemperatureUnit: "",
     };
@@ -335,6 +367,7 @@ async function getWeatherAsync(lat, lon, callBack) {
         cached.observationShortText = String(
           data.features[0].properties.textDescription
         );
+        cached.observationIconUrl = String(data.features[0].properties.icon);
 
         // Temperature, read it first, then convert it to Fahrenheit
         {
@@ -406,6 +439,7 @@ async function getWeatherAsync(lat, lon, callBack) {
         cached.detailedForecast = String(
           data.properties.periods[0].detailedForecast
         );
+        cached.forecastIconUrl = String(data.properties.periods[0].icon);
         cached.forecastStartTime = String(data.properties.periods[0].startTime);
         cached.forecastTimeStamp = Date.now();
         localStorage.setItem("weather", JSON.stringify(cached));
@@ -465,4 +499,87 @@ function wkElapsedTime(startTime) {
   if (seconds) return `${seconds}s`;
 
   return `${hours}h ${minutes}m ${seconds}s`;
+}
+
+//
+// **************************************************************************
+// Function findWeatherWords
+// **************************************************************************
+//
+
+function findWeatherWords(shortForecast) {
+  // Weather Phrases sorted by Severity
+  let weatherPhrases = [
+    "Hurricane",
+    "Tornado",
+    "Tropical Storm",
+    "Blizzard",
+
+    "Ice Storm",
+    "Winter Storm",
+    "Hail",
+    "Freezing Rain",
+    "Freezing Drizzle",
+    "Sleet",
+    "Heavy Snow",
+    "Snow",
+    "Flurries",
+
+    "Severe Lightning Storm",
+    "Severe Lightning",
+    "Lightning Storm",
+    "Severe Thunderstorm",
+    "Freezing Rain",
+    "Freezing Drizzle",
+    "Thunderstorms",
+    "Thunderstorm",
+    "Lightning",
+
+    "Rain",
+    "Showers",
+    "Shower",
+    "Drizzle",
+
+    "Smoke",
+    "Fog",
+    "Haze",
+
+    "Windy",
+
+    "Cloudy",
+    "Mostly Cloudy",
+    "Partly Cloudy",
+    "Scattered Clouds",
+    "Overcast",
+
+    "Hot",
+    "Cold",
+    "Sunny",
+    "Clear",
+  ];
+
+  for (let i = 0; i < weatherPhrases.length; i++) {
+    if (shortForecast.toLowerCase().includes(weatherPhrases[i].toLowerCase())) {
+      return BadHyphen(weatherPhrases[i]);
+    }
+  }
+
+  return "Error";
+}
+
+//
+// **************************************************************************
+// Function BadHyphen
+// **************************************************************************
+//
+
+function BadHyphen(phrase) {
+  let split = 7;
+  let words = phrase.split(" ");
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].length > split) {
+      words[i] = words[i].substring(0, split) + "-" + words[i].substring(split);
+    }
+  }
+  return words.join(" ");
 }

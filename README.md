@@ -34,6 +34,10 @@ Just a place to play with web code while learning. <br>
 
 ## Blog
 
+### 24/08/29
+
+- Refactoring WeatherKitty to be portable
+
 ### 24/08/24
 
 - Added GridBox Demo to play with, learn, and debug a GridBox issue.

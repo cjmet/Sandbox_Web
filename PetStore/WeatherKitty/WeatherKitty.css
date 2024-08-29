@@ -38,21 +38,46 @@
   display: flex;
 }
 
-#WeatherKittyForecast {
+#WeatherKittyCurrent {
   /* border: green 1px solid; */
+  text-wrap: pretty;
+  hyphens: auto;
   text-align: center;
-  align-content: center;
+  align-content: end;
   width: 5rem;
   height: 4.5rem;
+  box-sizing: border-box;
   margin-right: 0.5rem;
+  padding: 0.15rem;
+  overflow: hidden;
+
+  font-family: Arial, Helvetica, sans-serif;
+  text-shadow: 0.05em 0.05em 0 black, -0.05em -0.05em 0 black,
+    -0.05em 0.05em 0 black, 0.05em -0.05em 0 black;
+
+  background-image: url("img/spacer.png");
+  background-size: cover;
+  background-position: center;
 }
 
-#WeatherKittyImage {
+#WeatherKittyForecast {
   /* border: blue 1px solid; */
+  text-wrap: pretty;
+  hyphens: auto;
   text-align: center;
-  align-content: center;
+  align-content: end;
+  box-sizing: border-box;
   width: 4.5rem;
   height: 4.5rem;
+  overflow: hidden;
+
+  font-family: Arial, Helvetica, sans-serif;
+  text-shadow: 0.05em 0.05em 0 black, -0.05em -0.05em 0 black,
+    -0.05em 0.05em 0 black, 0.05em -0.05em 0 black;
+
+  background-image: url("img/WeatherKittyC.jpeg");
+  background-size: cover;
+  background-position: center;
 }
 
 /* cjm */
@@ -93,8 +118,8 @@ null [tooltip]:hover::before {
 }
 
 #WeatherKittyWidget:hover {
-  #WeatherKittyForecast,
-  #WeatherKittyImage {
+  #WeatherKittyCurrent,
+  #WeatherKittyForecast {
     transition: all 0.33s;
     opacity: 0.5;
   }
