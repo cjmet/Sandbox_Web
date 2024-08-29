@@ -6,6 +6,7 @@
     <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <title>Hello World! (title)</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="WeatherKitty/WeatherKitty.css" />
     <link rel="stylesheet" href="images/keyframes.css" />
     <link rel="stylesheet" href="images/animations.css" />
   </head>
@@ -24,12 +25,16 @@
           <a href="#about">About</a>
         </div>
       </nav>
-      <div id="WeatherWidget">
-        <div id="WeatherForecast">Weather Widget</div>
-        <div id="WeatherImage">
-          <img src="images/WeatherKittyC.jpeg" height="64" width="64" />
+      <div id="WeatherKittyWidget">
+        <div id="WeatherKittyForecast">Weather Widget</div>
+        <div id="WeatherKittyImage">
+          <img
+            src="WeatherKitty/img/WeatherKittyC.jpeg"
+            height="64"
+            width="64"
+          />
         </div>
-        <div id="WeatherToolTip">Weather Tool Tip</div>
+        <div id="WeatherKittyToolTip">Weather Tool Tip</div>
       </div>
     </header>
 
@@ -149,8 +154,7 @@
 
     <script src="./scripts/getConfigJSON.js"></script>
     <script src="./scripts/functions.js"></script>
-    <script src="./scripts/getWeatherLocationAsync.js"></script>
-    <script src="./scripts/getWeatherAsync.js"></script>
+    <script src="./WeatherKitty/WeatherKitty.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>

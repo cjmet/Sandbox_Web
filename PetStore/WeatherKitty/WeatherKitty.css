@@ -1,0 +1,114 @@
+/* this is what makes it fill the viewport */
+/* this was ommitted from the discussion, demos, and sample files */
+
+#WeatherKittyBody {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: min-content 1fr auto;
+  grid-template-areas:
+    "header header"
+    "nav main"
+    "footer footer";
+}
+
+#WeatherKittyHeader {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  color: white;
+  padding: 0.5em;
+  text-align: left;
+  overflow: hidden;
+  z-index: 1000;
+
+  display: flex;
+}
+
+#WeatherKittySpacer {
+  flex-grow: 1;
+}
+
+/* height: 4.5rem / 72px; */
+#WeatherKittyWidget {
+  /* border: red 1px solid; */
+  flex: 0 1 auto;
+  width: 9.5rem;
+  height: 4.5rem;
+  display: flex;
+}
+
+#WeatherKittyForecast {
+  /* border: green 1px solid; */
+  text-align: center;
+  align-content: center;
+  width: 5rem;
+  height: 4.5rem;
+  margin-right: 0.5rem;
+}
+
+#WeatherKittyImage {
+  /* border: blue 1px solid; */
+  text-align: center;
+  align-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+/* cjm */
+null [tooltip]::before {
+  display: none;
+
+  position: absolute;
+  content: attr(tooltip);
+  opacity: 0;
+  z-index: 2000;
+}
+
+null [tooltip]:hover::before {
+  opacity: 1;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#WeatherKittyToolTip {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 0.5em;
+  border-radius: 0.5em;
+
+  transition: all 0.33s;
+  translate: 100% -100%;
+  width: 15rem;
+  height: auto;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.75);
+  border: black 3px solid;
+  opacity: 0;
+}
+
+#WeatherKittyWidget:hover {
+  #WeatherKittyForecast,
+  #WeatherKittyImage {
+    transition: all 0.33s;
+    opacity: 0.5;
+  }
+  #WeatherKittyToolTip {
+    color: white;
+    transition: all 0.33s;
+    translate: 0% 0%;
+    width: 15rem;
+    height: auto;
+    opacity: 1;
+    /* overflow: visible; */
+  }
+}
+
+#weatherspacer {
+  font-size: 1em;
+}

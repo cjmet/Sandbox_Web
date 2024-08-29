@@ -1,15 +1,138 @@
+// stict mode
 "use strict";
-let debug = true;
+let locCacheTime = 60000 * 5; // 5? minutes just in case we are in a car and chasing a tornado?
+let shortCacheTime = 60000 * 6; // 7 (-1) minutes so we can catch weather alerts
+let longCacheTime = 60000 * 60 * 24; // 24 hours
 
+//
+// **************************************************************************
+// Script
+// **************************************************************************
+//
+
+console.log("Weather Kitty Loading");
+setTimeout(WeatherWidget, 3000);
+setInterval(WeatherWidget, shortCacheTime);
+// /Weather Kitty Widget
+
+//
+// **************************************************************************
+// Function Weather Widget
+// **************************************************************************
+//
+
+function WeatherWidget() {
+  getWeatherLocationAsync(function (weather) {
+    console.log("[Weather Widget] Weather Data");
+    // console.log(weather);
+
+    // Short Forecast
+    document.getElementById("WeatherKittyForecast").innerHTML =
+      weather.observationShortText +
+      " " +
+      weather.observationTemperature +
+      weather.observationTemperatureUnit;
+
+    // Weather Image
+
+    // *** Add Code Here  *** //
+
+    // Long Forecast
+    let forecast =
+      "Forecast: <br>" +
+      weather.shortForecast +
+      " " +
+      weather.temperature +
+      weather.temperatureUnit +
+      "<br>" +
+      weather.probabilityOfPrecipitation +
+      "% precipitation<br>" +
+      '<div id="weatherspacer"><br></div>' +
+      weather.detailedForecast;
+    // + "<br>" + weather.forecastStartTime;
+    document
+      .getElementById("WeatherKittyWidget")
+      .setAttribute("tooltip", forecast); // cjm
+    document.getElementById("WeatherKittyToolTip").innerHTML = forecast;
+  });
+}
+
+//
+// **************************************************************************
+// Function getWeatherLocationAsync
+// **************************************************************************
+//
+
+console.log("loading getLocationAsync.js");
+async function getWeatherLocationAsync(callBack) {
+  let cached = { lat: null, lon: null, timestamp: null };
+
+  // localStorage.setItem('user', JSON.stringify(userArray));
+  // const userData = JSON.parse(localStorage.getItem('user'));
+
+  cached = JSON.parse(localStorage.getItem("location"));
+  console.log(`[getLocationAsync] Checking Location Data`);
+
+  if (
+    cached?.lat != null &&
+    cached?.lon != null &&
+    cached?.timestamp != null &&
+    cached?.timestamp > Date.now() - locCacheTime
+  ) {
+    console.log(
+      `[getLocationAsync] Using cached location: ${cached.lat}, ${
+        cached.lon
+      }, ${cached.timestamp}, [${wkElapsedTime(
+        cached.timestamp + locCacheTime
+      )}]`
+    );
+    getWeatherAsync(cached.lat, cached.lon, callBack);
+  } else if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // console.log(position);
+        let lon = position.coords.longitude;
+        let lat = position.coords.latitude;
+        console.log(`[getLocationAsync] Latitude: ${lat}, Longitude: ${lon}`);
+        localStorage.setItem(
+          "location",
+          JSON.stringify({
+            lat: String(lat),
+            lon: String(lon),
+            timestamp: Date.now(),
+          })
+        );
+        getWeatherAsync(lat, lon, callBack);
+      },
+
+      (error) => {
+        console.log(`[getLocationAsync] Error: ${error.message}`);
+        if (cached.lat != null && cached.lon != null) {
+          console.log(
+            `[getLocationAsync] Using cached location: ${cached.lat}, ${cached.lon}, ${cached.timestamp}`
+          );
+          getWeatherAsync(cached.lat, cached.lon, callBack);
+        }
+      }
+    );
+  } else {
+    console.log("Geolocation data is not available.");
+  }
+}
+
+//
+// **************************************************************************
+// Function getWeatherAsync
+// **************************************************************************
+//
+/* 
 // tldr: Pick 6m for alerts or 1 hour for forecasts.
 //
 // Cache for 6 minutes so we can setinterval for 7 minutes which is
 // about half of the 15 minutes interval the weather service updates
 // it's possible we would want to set this as low as 4 or 5 minutes to
 // catch weather alerts, or as high as 4 hours which is the forecast interval.
-
-let shortCacheTime = 60000 * 6; // 7 (-1) minutes so we can catch weather alerts
-let longCacheTime = 60000 * 60 * 24; // 24 hours
+*/
 
 console.log("loading getWeatherAsync.js");
 
@@ -58,7 +181,7 @@ async function getWeatherAsync(lat, lon, callBack) {
     // localStorage.setItem("weather", JSON.stringify(cached));
   } else {
     console.log(
-      `[getWeatherAsync] Cached Weather Data [${ElapsedTime(
+      `[getWeatherAsync] Cached Weather Data [${wkElapsedTime(
         cached.forecastTimeStamp + shortCacheTime
       )}]`
     );
@@ -93,7 +216,7 @@ async function getWeatherAsync(lat, lon, callBack) {
     cached.forecastUrlTimeStamp > Date.now() - longCacheTime
   ) {
     console.log(
-      `[getWeatherAsync] Using Cached Weather Url [${ElapsedTime(
+      `[getWeatherAsync] Using Cached Weather Url [${wkElapsedTime(
         cached.forecastUrlTimeStamp + longCacheTime
       )}]`
     );
@@ -142,7 +265,7 @@ async function getWeatherAsync(lat, lon, callBack) {
     cached?.observationStationTimeStamp > Date.now() - longCacheTime
   ) {
     console.log(
-      `[getWeatherAsync] Using Cached Observation Station [${ElapsedTime(
+      `[getWeatherAsync] Using Cached Observation Station [${wkElapsedTime(
         cached.observationStationTimeStamp + longCacheTime
       )}]`
     );
@@ -185,7 +308,7 @@ async function getWeatherAsync(lat, lon, callBack) {
     console.log("[getWeatherAsync] No Observation Station ID available");
   } else if (cached?.observationTimeStamp > Date.now() - shortCacheTime) {
     console.log(
-      `[getWeatherAsync] Using Cached Observation Data [${ElapsedTime(
+      `[getWeatherAsync] Using Cached Observation Data [${wkElapsedTime(
         cached.observationTimeStamp + shortCacheTime
       )}]`
     );
@@ -236,7 +359,7 @@ async function getWeatherAsync(lat, lon, callBack) {
   // https://api.weather.gov/gridpoints/JKL/65,16/forecast
   if (cached?.forecastTimeStamp > Date.now() - shortCacheTime) {
     console.log(
-      `[getWeatherAsync] Using Cached Weather Data [${ElapsedTime(
+      `[getWeatherAsync] Using Cached Weather Data [${wkElapsedTime(
         cached.forecastTimeStamp + shortCacheTime
       )}]`
     );
@@ -296,6 +419,12 @@ async function getWeatherAsync(lat, lon, callBack) {
   console.log("[getWeatherAsync] Done.");
 }
 
+//
+// **************************************************************************
+// Function WeatherTemperatureFahrenheit
+// **************************************************************************
+//
+
 function WeatherTemperatureFahrenheit(temperature, temperatureUnit) {
   // ((fahrenheit - 32) * 5 / 9) °F to °C;
   // celcius to fahrenheit: (celsius * 9 / 5) + 32
@@ -312,4 +441,28 @@ function WeatherTemperatureFahrenheit(temperature, temperatureUnit) {
     `[WeatherTemperatureFahrenheit] ${temperature} ${temperatureUnit} = ${fahrenheit} °F`
   );
   return fahrenheit;
+}
+
+//
+// **************************************************************************
+// Function Elapsed Time
+// **************************************************************************
+//
+
+function wkElapsedTime(startTime) {
+  let endTime = new Date();
+  // let elapsed = Math.abs(endTime - startTime);
+  let elapsed = endTime - startTime;
+  let seconds = Math.trunc(elapsed / 1000);
+  let minutes = Math.trunc(seconds / 60);
+  let hours = Math.trunc(minutes / 60);
+
+  seconds = seconds % 60;
+  minutes = minutes % 60;
+
+  if (hours) return `${hours}h`;
+  if (minutes) return `${minutes}m`;
+  if (seconds) return `${seconds}s`;
+
+  return `${hours}h ${minutes}m ${seconds}s`;
 }
