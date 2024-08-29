@@ -11,7 +11,7 @@ let longCacheTime = 60000 * 60 * 24; // 24 hours
 //
 
 console.log("Loading Weather Kitty");
-setTimeout(WeatherWidget, 1); // cjm
+setTimeout(WeatherWidget, 3000); // cjm
 setInterval(WeatherWidget, shortCacheTime);
 // /Weather Kitty Widget
 
