@@ -1,3 +1,5 @@
+// WeatherKitty.js Version 240829.15
+
 // stict mode
 "use strict";
 let locCacheTime = 60000 * 5; // 5? minutes just in case we are in a car and chasing a tornado?
