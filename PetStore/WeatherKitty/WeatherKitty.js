@@ -10,7 +10,7 @@ let longCacheTime = 60000 * 60 * 24; // 24 hours
 // **************************************************************************
 //
 
-console.log("Weather Kitty Loading");
+console.log("Loading Weather Kitty");
 setTimeout(WeatherWidget, 1); // cjm
 setInterval(WeatherWidget, shortCacheTime);
 // /Weather Kitty Widget
@@ -23,12 +23,9 @@ setInterval(WeatherWidget, shortCacheTime);
 
 function WeatherWidget() {
   getWeatherLocationAsync(function (weather) {
-    console.log("[WeatherWidget] Weather Data");
-    // console.log(weather);
-
     // Obs Text
     console.log(
-      `[WeatherData] obs: ${weather.observationShortText} ${weather.observationTemperature}${weather.observationTemperatureUnit}`
+      `[WeatherWidget] obs: ${weather.observationShortText} ${weather.observationTemperature}${weather.observationTemperatureUnit}`
     );
     document.getElementById("WeatherKittyCurrent").innerHTML =
       weather.observationShortText +
@@ -47,7 +44,7 @@ function WeatherWidget() {
 
     // Forecast Text
     console.log(
-      `[WeatherData] forecast: ${weather.shortForecast} ${weather.temperature}${weather.temperatureUnit}`
+      `[WeatherWidget] forecast: ${weather.shortForecast} ${weather.temperature}${weather.temperatureUnit}`
     );
     document.getElementById("WeatherKittyForecast").innerHTML =
       findWeatherWords(weather.shortForecast) +
@@ -93,7 +90,6 @@ function WeatherWidget() {
 // **************************************************************************
 //
 
-console.log("loading getLocationAsync.js");
 async function getWeatherLocationAsync(callBack) {
   let cached = { lat: null, lon: null, timestamp: null };
 
@@ -163,8 +159,6 @@ async function getWeatherLocationAsync(callBack) {
 // it's possible we would want to set this as low as 4 or 5 minutes to
 // catch weather alerts, or as high as 4 hours which is the forecast interval.
 */
-
-console.log("loading getWeatherAsync.js");
 
 async function getWeatherAsync(lat, lon, callBack) {
   console.log(`[getWeatherAsync] Latitude: ${lat}, Longitude: ${lon}`);
