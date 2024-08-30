@@ -7,15 +7,13 @@ body {
 }
 
 /* Transparent Background as a body::before Pseudo-Element */
-null body::before {
+.b::before {
   content: "";
   display: block;
   position: absolute;
-  top: 0;
-  left: 0;
   height: 100%;
   width: 100%;
-  opacity: 0.66;
+  opacity: 0.8;
   background-image: url("CatGirlReading.jpeg");
   background-size: cover;
   background-position: center;
@@ -84,7 +82,7 @@ body {
 }
 
 /* Box B Textured Background */
-.b {
+null .b {
   background-color: yellow;
   background-image: url("./BoxTexture800.jpg");
   background-size: cover;
@@ -109,12 +107,45 @@ null #CatGirl {
 
 /* The samge images as part of Box B Foreground */
 /* Conrete img Element as part of Box B Foreground  */
-null #CatGirl {
+.b {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-large;
+  font-size: 50px;
+  font-weight: bolder;
+}
+
+#TextWrapper {
+  border: black 3px solid;
+  background-color: rgba(255, 255, 255, 0.66);
+  /* flex-grow: 1; */
+  /* position: relative; */
+  box-sizing: border-box;
+  padding: 0.1em;
+
+  text-align: center;
+  align-self: center;
+  justify-self: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-large;
+  font-size: 50px;
+  font-weight: bolder;
+  display: none;
+}
+
+#CatGirl {
+  flex-grow: 1;
+  position: absolute;
   width: 100%;
   height: 100%;
-  opacity: 0.66;
   object-fit: cover;
   object-position: center;
+  opacity: 0.75;
+  display: none;
 }
 
 .a {
