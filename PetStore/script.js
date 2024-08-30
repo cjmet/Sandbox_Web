@@ -8,6 +8,8 @@ DemoMessage(
   "All Praise Our Feline Overlords! (JavaScript)"
 );
 
+WeatherKitty();
+
 // Weather Button
 document.getElementById("WeatherButton").addEventListener("click", function () {
   if (document.getElementById("WeatherButton").textContent != "W") {
