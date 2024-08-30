@@ -1,0 +1,3 @@
+[submodule "PetStore/WeatherKitty"]
+	path = PetStore/WeatherKitty
+	url = https://github.com/cjmet/WeatherKitty.git
