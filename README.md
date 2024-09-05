@@ -6,10 +6,6 @@ Just a place to play with web code while learning. <br>
 
 ## To-Do
 
-- [ ] Weather API
-  - [ ] Make it pretty
-  - [ ] Implement Weather Image
-  - [ ] Scan historical shortForecasts for keyword parsing to create icons
 - [ ] Shrink the Header on Scroll, then sticky it
 
 ## Questions
